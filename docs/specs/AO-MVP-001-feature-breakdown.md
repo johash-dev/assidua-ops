@@ -2,7 +2,7 @@
 
 **Parent Feature ID:** AO-MVP-001  
 **Authority:** `docs/requirements/Assidua-Ops-requirements-baseline.md` (FROZEN 2026-08-11 + RC-001 / I58 HUMAN APPROVED 2026-08-13); `docs/architecture/Assidua-Ops-architecture-mvp.md` (HUMAN APPROVED 2026-08-12; RC-001 amend HUMAN CONFIRMED 2026-08-13); ADRs 001–008  
-**Status:** SPECIFY COMPLETE — AO-F-001…012 HUMAN APPROVED (2026-08-12); **RC-001 amend on F-005 / F-009 HUMAN CONFIRMED** (2026-08-13); **AO-ENG-000 PLAN HUMAN APPROVED** (2026-08-13); IMPLEMENT complete — pending REVIEW  
+**Status:** SPECIFY COMPLETE — AO-F-001…012 HUMAN APPROVED (2026-08-12); **RC-001 amend on F-005 / F-009 HUMAN CONFIRMED** (2026-08-13); **AO-ENG-000 COMPLETE** (2026-08-13)  
 **Purpose:** Split the MVP into ordered, shippable feature contracts for SPECIFY → PLAN → IMPLEMENT. Does not invent business rules.
 
 ---
@@ -21,7 +21,7 @@
 
 | Order | ID | Title | Depends on | Deferred gates | Spec status |
 |------:|----|-------|------------|----------------|-------------|
-| 0 | AO-ENG-000 | Platform foundation (Next.js + NestJS + Prisma + CI skeleton) | — | — | PLAN HUMAN APPROVED (2026-08-13); IMPLEMENT complete — pending REVIEW |
+| 0 | AO-ENG-000 | Platform foundation (Next.js + NestJS + Prisma + CI skeleton) | — | — | **COMPLETE** (2026-08-13) |
 | 1 | AO-F-001 | Department & category taxonomy | AO-ENG-000 | — | **HUMAN APPROVED (2026-08-12)** |
 | 2 | AO-F-002 | Staff identity (login/session + Admin user/role management + sole-DH rules) | AO-F-001 (Department exists for DH) | — | **HUMAN APPROVED (2026-08-12)** |
 | 3 | AO-F-003 | Customers & sites | AO-F-002 | — | **HUMAN APPROVED (2026-08-12)** |
@@ -89,5 +89,5 @@ Cross-cutting writes (audit entries, timeline events, notifications) are **emitt
 
 ## Next exact step
 
-1. Independent **REVIEW** of AO-ENG-000 (Reviewer), then human approval to close the slice.
-2. After ENG-000 is COMPLETE: DESIGN (UI/UX) then PLAN for AO-F-001 (taxonomy). Include RC-001 in F-005 / F-009 PLANs. Skip DESIGN only when the slice has no staff/customer UI (e.g. F-010).
+1. DESIGN (UI/UX) then PLAN for **AO-F-001** (taxonomy).
+2. Include RC-001 in F-005 / F-009 PLANs when those slices start. Skip DESIGN only when the slice has no staff/customer UI (e.g. F-010).
