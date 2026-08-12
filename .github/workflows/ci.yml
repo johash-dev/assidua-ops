@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: assidua
+          POSTGRES_PASSWORD: assidua
+          POSTGRES_DB: assidua_ops
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U assidua -d assidua_ops"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      NODE_ENV: test
+      DATABASE_URL: postgresql://assidua:assidua@localhost:5432/assidua_ops
+      API_PORT: "4001"
+      WEB_PORT: "4000"
+      API_ORIGIN: http://localhost:4001
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter api run prisma:migrate
+      - run: pnpm lint
+      - run: pnpm typecheck
+      - run: pnpm test
+      - run: pnpm --filter api build && pnpm --filter web build
+      - run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm test:e2e

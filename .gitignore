@@ -1,0 +1,12 @@
+node_modules
+.env
+dist
+.next
+coverage
+test-results
+playwright-report
+blob-report
+playwright/.cache
+*.tsbuildinfo
+.DS_Store
+Thumbs.db

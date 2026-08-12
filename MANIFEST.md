@@ -1,0 +1,31 @@
+# File Manifest
+
+- `MANIFEST.md`
+- `README.md`
+- `agents/00-orchestrator.md`
+- `agents/01-requirements-agent.md`
+- `agents/02-architect-agent.md`
+- `agents/03-builder-agent.md`
+- `agents/04-reviewer-agent.md`
+- `agents/05-debugger-agent.md`
+- `agents/06-release-agent.md`
+- `agents/07-research-agent.md`
+- `agents/08-test-agent.md`
+- `agents/09-uiux-agent.md`
+- `skills/architecture-audit/SKILL.md`
+- `skills/architecture-design/SKILL.md`
+- `skills/code-review/SKILL.md`
+- `skills/codebase-comprehension/SKILL.md`
+- `skills/debugging/SKILL.md`
+- `skills/feature-specification/SKILL.md`
+- `skills/git-pr/SKILL.md`
+- `skills/grill-requirements/SKILL.md`
+- `skills/handoff-context/SKILL.md`
+- `skills/implementation-planning/SKILL.md`
+- `skills/minimal-change-engineering/SKILL.md`
+- `skills/refactoring/SKILL.md`
+- `skills/security-review/SKILL.md`
+- `skills/skill-governance/SKILL.md`
+- `skills/testing-validation/SKILL.md`
+- `skills/ui-interaction-design/SKILL.md`
+- `skills/vertical-slice-implementation/SKILL.md`
