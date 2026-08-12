@@ -3,7 +3,7 @@
 **Feature ID:** AO-ENG-000  
 **Parent:** AO-MVP-001  
 **Authority:** `docs/architecture/Assidua-Ops-architecture-mvp.md` (HUMAN APPROVED + ADR-009); `docs/specs/AO-MVP-001-feature-breakdown.md`; ADRs 001–009  
-**Status:** PLAN **HUMAN APPROVED** (2026-08-13); IMPLEMENT complete — pending independent REVIEW  
+**Status:** **COMPLETE** (HUMAN APPROVED close 2026-08-13); REVIEW PASS; IMPLEMENT complete  
 **DESIGN (UI/UX):** **skipped** — no staff-facing or customer-facing product UI in this slice (scaffold + health page only)  
 **Risk:** Medium (new runtime, CI, env/secrets baseline; no auth, no business schema, no production hosting)
 
