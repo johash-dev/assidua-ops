@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Technician — Assidua Ops</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="staff.css" />
+  </head>
+  <body data-page="technician-form">
+    <div id="content">
+      <div class="head">
+        <h1>Kasun Fernando</h1>
+        <a class="btn-ghost" href="technicians.html">Back</a>
+      </div>
+      <div class="panel panel-pad" style="max-width: 480px">
+        <div class="field">
+          <label for="name">Name</label>
+          <input id="name" value="Kasun Fernando" data-show="dh,admin" />
+          <div class="locked" data-show="fd">Kasun Fernando</div>
+        </div>
+        <div class="field">
+          <label for="phone">Phone</label>
+          <input id="phone" value="077 555 0101" data-show="dh,admin" />
+          <div class="locked" data-show="fd">077 555 0101</div>
+        </div>
+        <div class="field">
+          <label for="email">Email (optional)</label>
+          <input id="email" value="kasun@example.lk" data-show="dh,admin" />
+          <div class="locked" data-show="fd">kasun@example.lk</div>
+        </div>
+        <div class="field">
+          <label>Primary department</label>
+          <select data-show="admin">
+            <option selected>Rivon</option>
+            <option>Rover</option>
+            <option>Assidua</option>
+          </select>
+          <div class="locked" data-show="fd,dh">Rivon</div>
+          <p class="hint" data-show="dh">Department Heads cannot change primary department.</p>
+          <p class="hint" data-show="admin">Rejected if the technician has open jobs.</p>
+        </div>
+        <div class="head-actions" style="margin-top: 20px" data-show="dh,admin">
+          <a class="btn" href="technicians.html">Save</a>
+          <a class="btn-ghost" href="technicians.html">Deactivate</a>
+        </div>
+      </div>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>

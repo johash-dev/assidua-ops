@@ -1,9 +1,9 @@
 import { Body, Controller, Get, Inject, Param, Patch, Post, Req, UseGuards } from "@nestjs/common";
-import { AdminGuard, TaxonomyGuard, principalOf, type Principal } from "./taxonomy.guard";
+import { AdminGuard, AuthGuard, principalOf, type Principal } from "../identity/identity.guard";
 import { TaxonomyService } from "./taxonomy.service";
 
 @Controller()
-@UseGuards(TaxonomyGuard)
+@UseGuards(AuthGuard)
 export class TaxonomyController {
   constructor(@Inject(TaxonomyService) private readonly taxonomy: TaxonomyService) {}
 

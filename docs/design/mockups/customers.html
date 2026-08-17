@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Customers — Assidua Ops</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="staff.css" />
+  </head>
+  <body data-page="customers">
+    <div id="content">
+      <div class="head">
+        <h1>Customers</h1>
+        <a class="btn" data-show="fd,dh,admin" href="customer-detail.html">New customer</a>
+      </div>
+      <div class="panel panel-pad" style="margin-bottom: 16px">
+        <label for="q">Search name or phone</label>
+        <input id="q" value="Nimal" />
+      </div>
+      <div class="panel">
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Phone</th>
+              <th>Address</th>
+              <th>Sites</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><a class="row-link" href="customer-detail.html">Nimal Perera</a></td>
+              <td>077 123 4567</td>
+              <td>12 Galle Road, Colombo 03</td>
+              <td>2</td>
+            </tr>
+            <tr>
+              <td><a class="row-link" href="customer-detail.html">Nimal Perera</a></td>
+              <td>071 888 2211</td>
+              <td>88 Baseline Road, Colombo 09</td>
+              <td>1</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="hint">Duplicates are allowed. Pick the correct record.</p>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>

@@ -1,6 +1,6 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { taxonomyFail } from "./taxonomy.errors";
-import type { StaffRole } from "./taxonomy.guard";
+import type { StaffRole } from "../identity/roles";
 import {
   TaxonomyRepository,
   type CategoryRow,

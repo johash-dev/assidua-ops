@@ -1,9 +1,10 @@
 import { expect, test } from "@playwright/test";
+import { loginAsAdmin } from "./helpers/login";
 
 test("Admin can view seed tree, create a leaf, and deactivate it", async ({
   page,
 }) => {
-  await page.setExtraHTTPHeaders({ "X-Test-Role": "ADMIN" });
+  await loginAsAdmin(page);
   await page.goto("/taxonomy");
   await expect(page.getByRole("heading", { name: "Taxonomy" })).toBeVisible();
   await expect(page.locator('[data-testid="department"][data-name="Rivon"]')).toBeVisible();

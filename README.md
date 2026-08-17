@@ -1,77 +1,22 @@
-# AI-Native Engineering Agents & Skills
+# Assidua Ops
 
-A project-specific AI engineering operating layer for the Assidua Service Platform.
+Staff operations platform for Assidua. **Open this product via Amigo Studio** (`C:\Users\Admin\Amigo Studio`) and talk to **Amigo**. Craft skills and specialist agents live there. This repo keeps product facts: code, specs, ADRs, and `AGENTS.md`.
 
-Inspired by the composable, small-skill philosophy of Matt Pocock's `skills` and the comprehension-first, minimal-change philosophy of Dietrich Gebert's `ponytail`.
+## Stack
 
-## Architecture
+Next.js App Router + React + TypeScript, NestJS + TypeScript, PostgreSQL + Prisma, feature-first backend, service-owned business rules, repository-only DB access, server-side authorization, transactional writes, append-only history/audit, decoupled notifications, Playwright for completed flows, GitHub Flow, UI foundation Tailwind + shadcn/ui (ADR-009).
 
-```text
-Human
-  ↓
-Orchestrator
-  ↓
-Workflow
-  ↓
-Specialist Agent
-  ↓
-Relevant Skills
-  ↓
-Tools / Repository
-  ↓
-Artifact + Evidence
-  ↓
-Independent Validation
-  ↓
-Human Approval
-```
-
-Agents own responsibilities. Workflows control ordering. Skills provide reusable capability. Artifacts preserve state.
-
-## Agents
-
-- `agents/00-orchestrator.md`
-- `agents/01-requirements-agent.md`
-- `agents/02-architect-agent.md`
-- `agents/03-builder-agent.md`
-- `agents/04-reviewer-agent.md`
-- `agents/05-debugger-agent.md`
-- `agents/06-release-agent.md`
-- `agents/07-research-agent.md`
-- `agents/08-test-agent.md`
-- `agents/09-uiux-agent.md`
-
-## Skills
-
-- grill-requirements
-- codebase-comprehension
-- architecture-design
-- feature-specification
-- ui-interaction-design
-- implementation-planning
-- vertical-slice-implementation
-- minimal-change-engineering
-- testing-validation
-- code-review
-- security-review
-- debugging
-- architecture-audit
-- refactoring
-- git-pr
-- handoff-context
-- skill-governance
-
-## Project context
-
-The supplied architecture establishes Next.js App Router + React + TypeScript, NestJS + TypeScript, PostgreSQL + Prisma, feature-first backend organization, service-owned business rules, repository-only DB access, server-side authorization, transactional writes, append-only history/audit, decoupled notifications, Playwright for completed flows, GitHub Flow for the MVP, and a code-first UI foundation (Tailwind CSS + shadcn/ui — ADR-009).
-
-Always treat the supplied project architecture files as authoritative.
+Treat `docs/architecture/`, `docs/specs/`, and `AGENTS.md` as authoritative.
 
 ## Runtime
 
 Assidua Ops is a pnpm workspace: `apps/web` (Next.js) and `apps/api` (NestJS) with PostgreSQL via Prisma.
 
 **Prerequisites:** Node 22+ (this repo uses Node 24 locally), pnpm 9+ (`corepack enable` then `corepack prepare pnpm@9.15.9 --activate`; if that is blocked, `npx pnpm@9.15.9` works), Docker.
+
+From Amigo Studio: `npx amigo switch assidua-ops` then `npx amigo run`. Catalog ports are **4000 / 4001 / 5433**.
+
+Or from this directory:
 
 ```text
 docker compose up -d
@@ -83,11 +28,13 @@ pnpm dev
 ```
 
 - Smoke page: http://localhost:4000/
-- Taxonomy (Admin UI): http://localhost:4000/taxonomy
+- Sign in: http://localhost:4000/login
+- Taxonomy (Admin): http://localhost:4000/taxonomy
+- Users (Admin): http://localhost:4000/staff-users
 - Health (via Next rewrite): http://localhost:4000/api/health
 - Health (API direct): http://localhost:4001/api/health
 
-`pnpm dev` `/taxonomy` sends **`X-Test-Role: ADMIN`** so the Admin tree works in a normal browser. Direct API calls still need that header. It is accepted only when the API `NODE_ENV` is `development` or `test`, and **must not be used in production** — AO-F-002 replaces it with staff sessions. Production web builds do not send the header; Playwright still sets it for CI e2e.
+Copy `.env.example` to `.env`. Seed creates a bootstrap Admin and one DH per Rivon/Rover/Assidua from `SEED_*` variables (never commit real secrets). `SESSION_SECRET` must be at least 32 characters. Sign in at `/login` — there is no `X-Test-Role` header.
 
 Local Compose publishes Postgres on **5433** so it does not collide with a host Postgres on 5432. CI uses 5432 on the GitHub Actions service. App ports are **4000/4001** (Windows Hyper-V often excludes 3000–3001).
 

@@ -10,7 +10,7 @@
     "dev": "pnpm --filter api --filter web --parallel dev",
     "lint": "pnpm --filter api lint && pnpm --filter web lint",
     "typecheck": "pnpm --filter api typecheck && pnpm --filter web typecheck",
-    "test": "pnpm --filter api test",
+    "test": "dotenv -e .env -- pnpm --filter api test",
     "test:e2e": "playwright test",
     "db:migrate": "dotenv -e .env -- pnpm --filter api run prisma:migrate",
     "db:generate": "pnpm --filter api exec prisma generate",

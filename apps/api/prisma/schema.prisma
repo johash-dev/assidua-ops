@@ -7,12 +7,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum StaffRole {
+  FRONT_DESK
+  COORDINATOR
+  DEPARTMENT_HEAD
+  ADMIN
+}
+
 model Department {
   id             String         @id @default(cuid())
   name           String
   active         Boolean        @default(true)
   defaultSlaDays Int            @default(10)
   categories     CategoryNode[]
+  staffUsers     StaffUser[]
   createdAt      DateTime       @default(now())
   updatedAt      DateTime       @updatedAt
 }
@@ -32,4 +40,44 @@ model CategoryNode {
 
   @@index([departmentId])
   @@index([parentId])
+}
+
+model StaffUser {
+  id           String         @id @default(cuid())
+  email        String         @unique
+  name         String
+  role         StaffRole
+  departmentId String?
+  department   Department?    @relation(fields: [departmentId], references: [id])
+  active       Boolean        @default(true)
+  passwordHash String
+  sessions     StaffSession[]
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+
+  @@index([departmentId])
+}
+
+model StaffSession {
+  id          String    @id @default(cuid())
+  staffUserId String
+  staffUser   StaffUser @relation(fields: [staffUserId], references: [id], onDelete: Cascade)
+  tokenHash   String    @unique
+  expiresAt   DateTime
+  createdAt   DateTime  @default(now())
+
+  @@index([staffUserId])
+}
+
+model AuditEntry {
+  id           String   @id @default(cuid())
+  at           DateTime @default(now())
+  actorUserId  String?
+  action       String
+  entityType   String
+  entityId     String
+  departmentId String?
+  metadata     Json?
+
+  @@index([departmentId, at])
 }

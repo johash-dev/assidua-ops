@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Customer — Assidua Ops</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="staff.css" />
+  </head>
+  <body data-page="customer-detail">
+    <div id="content">
+      <div class="head">
+        <h1>Nimal Perera</h1>
+        <a class="btn-ghost" href="customers.html">Back</a>
+      </div>
+      <div class="stack" style="max-width: 640px">
+        <div class="panel panel-pad">
+          <div class="field">
+            <label for="name">Name</label>
+            <input id="name" value="Nimal Perera" data-show="fd,dh,admin" />
+            <div class="locked" data-show="coord">Nimal Perera</div>
+          </div>
+          <div class="field">
+            <label for="phone">Phone</label>
+            <input id="phone" value="077 123 4567" data-show="fd,dh,admin" />
+            <div class="locked" data-show="coord">077 123 4567</div>
+          </div>
+          <div class="field">
+            <label for="email">Email (optional)</label>
+            <input id="email" data-show="fd,dh,admin" />
+            <div class="locked" data-show="coord">—</div>
+          </div>
+          <div class="field">
+            <label for="addr">Primary contact address</label>
+            <input id="addr" value="12 Galle Road, Colombo 03" data-show="fd,dh,admin" />
+            <div class="locked" data-show="coord">12 Galle Road, Colombo 03</div>
+          </div>
+          <div class="head-actions" style="margin-top: 16px" data-show="fd,dh,admin">
+            <button class="btn" type="button">Save</button>
+          </div>
+        </div>
+        <div class="panel panel-pad">
+          <div class="section-title">Sites</div>
+          <div class="job-card">
+            <b>Home — Dehiwala</b>
+            <p class="muted" style="margin: 6px 0 0">42 Galle Road, Dehiwala</p>
+            <p class="hint">In use on jobs — cannot delete</p>
+          </div>
+          <div class="job-card">
+            <b>Office — Union Place</b>
+            <p class="muted" style="margin: 6px 0 0">14 Union Place, Colombo 02</p>
+            <div class="head-actions" style="margin-top: 8px" data-show="fd,dh,admin">
+              <button class="quiet" type="button">Edit</button>
+              <button class="quiet" type="button" data-show="admin">Delete</button>
+            </div>
+          </div>
+          <button class="btn-ghost" type="button" data-show="fd,dh,admin" style="margin-top: 12px">Add site</button>
+        </div>
+      </div>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>

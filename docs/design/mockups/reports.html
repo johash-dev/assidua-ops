@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Reports — Assidua Ops</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="staff.css" />
+  </head>
+  <body data-page="reports">
+    <div id="content">
+      <div class="head">
+        <div>
+          <h1>Reports</h1>
+          <p class="sub" data-show="dh">Rivon only. A copy is emailed to you. Weekly report is sent every Monday.</p>
+          <p class="sub" data-show="admin">All departments. A copy is emailed to you. Weekly report is sent every Monday.</p>
+        </div>
+      </div>
+      <div class="panel panel-pad" style="margin-bottom: 16px">
+        <div class="jobs" style="align-items: end; flex-wrap: wrap">
+          <div class="field" style="margin: 0">
+            <label for="start">Start</label>
+            <input id="start" type="date" value="2026-08-01" />
+          </div>
+          <div class="field" style="margin: 0">
+            <label for="end">End</label>
+            <input id="end" type="date" value="2026-08-13" />
+          </div>
+          <button class="btn" type="button">Generate report</button>
+        </div>
+        <p class="hint">Up to 90 days, not after today (Asia/Colombo).</p>
+      </div>
+      <div class="metrics">
+        <div class="metric"><span>Created</span><b>14</b></div>
+        <div class="metric"><span>Closed</span><b>9</b></div>
+        <div class="metric"><span>Cancelled</span><b>2</b></div>
+        <div class="metric"><span>Reopened</span><b>1</b></div>
+        <div class="metric"><span>Open past deadline</span><b>3</b></div>
+        <div class="metric"><span>Unassigned New</span><b>1</b></div>
+        <div class="metric"><span>On Hold now</span><b>1</b></div>
+        <div class="metric"><span>Reopen rate</span><b>11%</b></div>
+      </div>
+      <div class="panel" style="margin-bottom: 16px">
+        <table>
+          <thead>
+            <tr>
+              <th>Technician</th>
+              <th>Open jobs</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Kasun Fernando</td><td>4</td></tr>
+            <tr><td>Isuru Perera</td><td>0</td></tr>
+            <tr data-hide="dh"><td>Fathima Rizwan</td><td>2</td></tr>
+            <tr data-hide="dh"><td>Nuwan Silva</td><td>1</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="panel panel-pad">
+        <div class="section-title">Time to resolve</div>
+        <p class="muted" style="margin: 0 0 12px">Pending decision — raw cycles only. No average is shown.</p>
+        <table>
+          <thead>
+            <tr>
+              <th>Job</th>
+              <th>Assigned → Resolved</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="mono">20260811-003</td>
+              <td>11 Aug 09:10 → 12 Aug 16:40</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>

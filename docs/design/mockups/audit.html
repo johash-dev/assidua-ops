@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Audit — Assidua Ops</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="staff.css" />
+  </head>
+  <body data-page="audit">
+    <div id="content">
+      <div class="head">
+        <div>
+          <h1>Audit</h1>
+          <p class="sub" data-show="dh">Rivon-scoped. Staff user admin and unscoped customer events are Admin-only.</p>
+          <p class="sub" data-show="admin">Append-only. No edit or delete.</p>
+        </div>
+      </div>
+      <div class="panel">
+        <table>
+          <thead>
+            <tr>
+              <th>Time</th>
+              <th>Actor</th>
+              <th>Action</th>
+              <th>Entity</th>
+              <th>Department</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="muted">13 Aug 2026, 09:40</td>
+              <td>Kasun Fernando</td>
+              <td>Status In Progress</td>
+              <td class="mono">20260813-001</td>
+              <td>Rivon</td>
+            </tr>
+            <tr>
+              <td class="muted">13 Aug 2026, 08:16</td>
+              <td>Ruwan Bandara</td>
+              <td>Technician assigned</td>
+              <td class="mono">20260813-001</td>
+              <td>Rivon</td>
+            </tr>
+            <tr>
+              <td class="muted">13 Aug 2026, 08:14</td>
+              <td>Amaya Jayasuriya</td>
+              <td>Inquiry created</td>
+              <td class="mono">20260813-001</td>
+              <td>Rivon</td>
+            </tr>
+            <tr data-hide="dh">
+              <td class="muted">13 Aug 2026, 08:14</td>
+              <td>Amaya Jayasuriya</td>
+              <td>Inquiry created</td>
+              <td class="mono">20260813-001</td>
+              <td>Assidua</td>
+            </tr>
+            <tr data-hide="dh">
+              <td class="muted">12 Aug 2026, 11:02</td>
+              <td>Priya Fernando</td>
+              <td>Staff role changed</td>
+              <td>Sajith Perera</td>
+              <td class="muted">—</td>
+            </tr>
+            <tr>
+              <td class="muted">12 Aug 2026, 17:02</td>
+              <td>Ruwan Bandara</td>
+              <td>Job cancelled</td>
+              <td class="mono">20260810-019</td>
+              <td>Rivon</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="pager">
+          <div class="pager-meta">1–6 of 86</div>
+          <div class="pager-pages">
+            <a class="page-btn" href="#" aria-disabled="true"><svg viewBox="0 0 24 24"><path d="M14.5 6.75 8.75 12l5.75 5.25" /></svg></a>
+            <a class="page-btn active" href="#">1</a>
+            <a class="page-btn" href="#">2</a>
+            <a class="page-btn" href="#">3</a>
+            <a class="page-btn" href="#"><svg viewBox="0 0 24 24"><path d="M9.5 6.75 15.25 12 9.5 17.25" /></svg></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>
