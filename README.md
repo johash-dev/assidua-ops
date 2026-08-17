@@ -78,12 +78,16 @@ docker compose up -d
 copy .env.example .env
 pnpm install
 pnpm db:migrate
+pnpm db:seed
 pnpm dev
 ```
 
 - Smoke page: http://localhost:4000/
+- Taxonomy (Admin UI): http://localhost:4000/taxonomy
 - Health (via Next rewrite): http://localhost:4000/api/health
 - Health (API direct): http://localhost:4001/api/health
+
+`pnpm dev` `/taxonomy` sends **`X-Test-Role: ADMIN`** so the Admin tree works in a normal browser. Direct API calls still need that header. It is accepted only when the API `NODE_ENV` is `development` or `test`, and **must not be used in production** — AO-F-002 replaces it with staff sessions. Production web builds do not send the header; Playwright still sets it for CI e2e.
 
 Local Compose publishes Postgres on **5433** so it does not collide with a host Postgres on 5432. CI uses 5432 on the GitHub Actions service. App ports are **4000/4001** (Windows Hyper-V often excludes 3000–3001).
 

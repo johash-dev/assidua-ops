@@ -13,7 +13,8 @@
     "test": "pnpm --filter api test",
     "test:e2e": "playwright test",
     "db:migrate": "dotenv -e .env -- pnpm --filter api run prisma:migrate",
-    "db:generate": "pnpm --filter api exec prisma generate"
+    "db:generate": "pnpm --filter api exec prisma generate",
+    "db:seed": "dotenv -e .env -- pnpm --filter api exec prisma db seed"
   },
   "devDependencies": {
     "@playwright/test": "^1.54.2",
