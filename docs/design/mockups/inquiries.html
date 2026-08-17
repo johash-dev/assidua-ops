@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Inquiries — Assidua Ops</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="staff.css" />
+  </head>
+  <body data-page="inquiries">
+    <div id="content">
+      <div class="head">
+        <div>
+          <h1>Inquiries</h1>
+          <p class="sub" data-show="dh">Rivon jobs only. Other departments’ jobs are hidden.</p>
+        </div>
+        <a class="btn" data-show="fd,dh,admin" href="inquiry-new.html">New inquiry</a>
+      </div>
+      <div class="panel">
+        <table>
+          <thead>
+            <tr>
+              <th>Inquiry</th>
+              <th>Customer</th>
+              <th>Jobs</th>
+              <th>Created</th>
+              <th>Latest status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><a class="row-link mono" href="inquiry-detail.html">20260813-001</a></td>
+              <td>Nimal Perera</td>
+              <td>
+                <div class="jobs" data-hide="dh">
+                  <span class="count">2</span>
+                  <span class="chip rivon">Rivon</span>
+                  <span class="chip assidua">Assidua</span>
+                </div>
+                <div class="jobs" data-show="dh">
+                  <span class="count">1</span>
+                  <span class="chip rivon">Rivon</span>
+                </div>
+              </td>
+              <td class="muted">13 Aug 2026</td>
+              <td><span class="pill assigned">Assigned</span></td>
+            </tr>
+            <tr data-hide="dh">
+              <td><a class="row-link mono" href="inquiry-detail.html">20260813-002</a></td>
+              <td>Fathima Rizwan</td>
+              <td>
+                <div class="jobs"><span class="count">1</span><span class="chip rover">Rover</span></div>
+              </td>
+              <td class="muted">13 Aug 2026</td>
+              <td><span class="pill new">New</span></td>
+            </tr>
+            <tr data-hide="dh">
+              <td class="mono">20260812-014</td>
+              <td>Kasun Fernando</td>
+              <td>
+                <div class="jobs"><span class="count">1</span><span class="chip assidua">Assidua</span></div>
+              </td>
+              <td class="muted">12 Aug 2026</td>
+              <td><span class="pill progress">In Progress</span></td>
+            </tr>
+            <tr>
+              <td class="mono">20260812-008</td>
+              <td>Nuwan Silva</td>
+              <td>
+                <div class="jobs" data-hide="dh">
+                  <span class="count">2</span>
+                  <span class="chip rivon">Rivon</span>
+                  <span class="chip rover">Rover</span>
+                </div>
+                <div class="jobs" data-show="dh">
+                  <span class="count">1</span>
+                  <span class="chip rivon">Rivon</span>
+                </div>
+              </td>
+              <td class="muted">12 Aug 2026</td>
+              <td><span class="pill hold">On Hold</span></td>
+            </tr>
+            <tr>
+              <td class="mono">20260811-003</td>
+              <td>Priya Fernando</td>
+              <td>
+                <div class="jobs"><span class="count">1</span><span class="chip rivon">Rivon</span></div>
+              </td>
+              <td class="muted">11 Aug 2026</td>
+              <td><span class="pill resolved">Resolved</span></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="pager">
+          <div class="pager-meta">1–5 of 48</div>
+          <div class="pager-pages">
+            <a class="page-btn" href="#" aria-disabled="true"><svg viewBox="0 0 24 24"><path d="M14.5 6.75 8.75 12l5.75 5.25" /></svg></a>
+            <a class="page-btn active" href="#">1</a>
+            <a class="page-btn" href="#">2</a>
+            <a class="page-btn" href="#">3</a>
+            <a class="page-btn" href="#"><svg viewBox="0 0 24 24"><path d="M9.5 6.75 15.25 12 9.5 17.25" /></svg></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>

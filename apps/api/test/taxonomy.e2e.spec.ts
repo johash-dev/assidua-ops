@@ -4,17 +4,25 @@ import { PrismaClient } from "@prisma/client";
 import request from "supertest";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { AppModule } from "../src/app.module";
+import { seedIdentity } from "../src/identity/identity.seed";
 import { seedTaxonomy } from "../src/taxonomy/taxonomy.seed";
 
-const admin = { "x-test-role": "ADMIN" };
+function cookieOf(res: request.Response): string {
+  const raw = res.headers["set-cookie"];
+  const list = Array.isArray(raw) ? raw : raw ? [raw] : [];
+  return list.map((c) => c.split(";")[0]).join("; ");
+}
 
 describe("taxonomy HTTP", () => {
   let app: INestApplication;
+  let adminCookie = "";
+  let dhCookie = "";
 
   beforeAll(async () => {
     const prisma = new PrismaClient();
     try {
       await seedTaxonomy(prisma);
+      await seedIdentity(prisma);
     } finally {
       await prisma.$disconnect();
     }
@@ -24,6 +32,22 @@ describe("taxonomy HTTP", () => {
     app = moduleRef.createNestApplication();
     app.setGlobalPrefix("api");
     await app.init();
+    const admin = await request(app.getHttpServer())
+      .post("/api/auth/login")
+      .send({
+        email: process.env.SEED_ADMIN_EMAIL,
+        password: process.env.SEED_ADMIN_PASSWORD,
+      })
+      .expect(200);
+    adminCookie = cookieOf(admin);
+    const dh = await request(app.getHttpServer())
+      .post("/api/auth/login")
+      .send({
+        email: process.env.SEED_DH_RIVON_EMAIL,
+        password: process.env.SEED_DH_RIVON_PASSWORD,
+      })
+      .expect(200);
+    dhCookie = cookieOf(dh);
   });
 
   afterAll(async () => {
@@ -36,7 +60,10 @@ describe("taxonomy HTTP", () => {
   });
 
   it("returns the seeded tree for Admin", async () => {
-    const res = await request(app.getHttpServer()).get("/api/taxonomy").set(admin).expect(200);
+    const res = await request(app.getHttpServer())
+      .get("/api/taxonomy")
+      .set("Cookie", adminCookie)
+      .expect(200);
     const names = (res.body.departments as { name: string }[]).map((d) => d.name);
     expect(names).toEqual(expect.arrayContaining(["Rivon", "Rover", "Assidua"]));
     const assidua = res.body.departments.find((d: { name: string }) => d.name === "Assidua");
@@ -57,48 +84,49 @@ describe("taxonomy HTTP", () => {
   });
 
   it("rejects non-Admin mutations", async () => {
-    for (const role of ["DEPARTMENT_HEAD", "FRONT_DESK", "COORDINATOR"]) {
-      const res = await request(app.getHttpServer())
-        .post("/api/departments")
-        .set({ "x-test-role": role })
-        .send({ name: "Nope", defaultSlaDays: 10 })
-        .expect(403);
-      expect(res.body).toMatchObject({ code: "FORBIDDEN" });
-    }
+    const res = await request(app.getHttpServer())
+      .post("/api/departments")
+      .set("Cookie", dhCookie)
+      .send({ name: "Nope", defaultSlaDays: 10 })
+      .expect(403);
+    expect(res.body).toMatchObject({ code: "FORBIDDEN" });
   });
 
   it("Admin creates a department and rejects SLA < 1", async () => {
     const created = await request(app.getHttpServer())
       .post("/api/departments")
-      .set(admin)
+      .set("Cookie", adminCookie)
       .send({ name: "HTTP Dept", defaultSlaDays: 7 })
       .expect(201);
     expect(created.body).toMatchObject({ name: "HTTP Dept", defaultSlaDays: 7, active: true });
     const bad = await request(app.getHttpServer())
       .patch(`/api/departments/${created.body.id}`)
-      .set(admin)
+      .set("Cookie", adminCookie)
       .send({ defaultSlaDays: 0 })
       .expect(400);
     expect(bad.body).toMatchObject({ code: "SLA_DAYS_INVALID" });
   });
 
   it("Admin creates a leaf and non-Admin GET omits inactive", async () => {
-    const tree = await request(app.getHttpServer()).get("/api/taxonomy").set(admin).expect(200);
+    const tree = await request(app.getHttpServer())
+      .get("/api/taxonomy")
+      .set("Cookie", adminCookie)
+      .expect(200);
     const rover = tree.body.departments.find((d: { name: string }) => d.name === "Rover");
     const leaf = await request(app.getHttpServer())
       .post("/api/categories")
-      .set(admin)
+      .set("Cookie", adminCookie)
       .send({ name: "HTTP Leaf", departmentId: rover.id, isLeaf: true })
       .expect(201);
     expect(leaf.body).toMatchObject({ name: "HTTP Leaf", isLeaf: true, departmentId: rover.id });
     await request(app.getHttpServer())
       .patch(`/api/categories/${leaf.body.id}`)
-      .set(admin)
+      .set("Cookie", adminCookie)
       .send({ active: false })
       .expect(200);
     const fd = await request(app.getHttpServer())
       .get("/api/taxonomy")
-      .set({ "x-test-role": "FRONT_DESK" })
+      .set("Cookie", dhCookie)
       .expect(200);
     const roverFd = fd.body.departments.find((d: { name: string }) => d.name === "Rover");
     const names = (roverFd?.categories ?? []).map((c: { name: string }) => c.name);

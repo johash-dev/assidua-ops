@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Job link — Assidua Ops</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="staff.css" />
+  </head>
+  <body data-page="tech" class="tech-page">
+    <div class="bar"></div>
+    <main>
+      <div class="tech-top">
+        <div class="wordmark">Assidua Ops</div>
+        <span class="chip rivon">Car</span>
+      </div>
+      <div class="panel panel-pad">
+        <div class="kv" style="grid-template-columns: 110px 1fr">
+          <dt>Customer</dt>
+          <dd>Nimal Perera</dd>
+          <dt>Phone</dt>
+          <dd>077 123 4567</dd>
+          <dt>Site</dt>
+          <dd>Home — Dehiwala, 42 Galle Road</dd>
+          <dt>Priority</dt>
+          <dd>Urgent</dd>
+          <dt>Status</dt>
+          <dd><span class="pill progress">In Progress</span></dd>
+          <dt>Deadline</dt>
+          <dd>23 Aug 2026</dd>
+        </div>
+        <div class="field" style="margin-top: 16px">
+          <label>Issue</label>
+          <p style="margin: 0; font-size: 14px">Engine warning light after highway drive</p>
+        </div>
+      </div>
+      <div class="panel panel-pad" style="margin-top: 16px">
+        <div class="section-title">Update status</div>
+        <div class="status-btns">
+          <button class="btn" type="button">In Progress</button>
+          <button class="btn-ghost" type="button">On Hold</button>
+          <button class="btn-ghost" type="button">Resolved</button>
+        </div>
+        <p class="hint">Resolved is allowed because this job has already been In Progress.</p>
+      </div>
+      <div class="panel panel-pad" style="margin-top: 16px">
+        <div class="section-title">Notes</div>
+        <div class="note">
+          <div class="note-meta">You · 13 Aug 2026, 09:40</div>
+          Arrived on site. Scanning ECU now.
+        </div>
+        <div class="field" style="margin-top: 12px">
+          <label for="n">Add note</label>
+          <textarea id="n"></textarea>
+        </div>
+        <button class="btn" type="button" style="margin-top: 8px">Add note</button>
+      </div>
+      <p class="hint" style="text-align: center">
+        <a class="quiet" href="tech-invalid.html">Simulate expired link</a>
+        ·
+        <a class="quiet" href="sign-in.html">Staff sign in</a>
+      </p>
+    </main>
+  </body>
+</html>

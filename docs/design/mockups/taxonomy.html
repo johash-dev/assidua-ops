@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Taxonomy — Assidua Ops</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="staff.css" />
+  </head>
+  <body data-page="taxonomy">
+    <div id="content">
+      <div class="head">
+        <div>
+          <h1>Taxonomy</h1>
+          <p class="sub">Departments own the categories used at intake. Only leaves can be selected; groups nest them.</p>
+        </div>
+        <button class="btn" type="button">Add department</button>
+      </div>
+      <div class="panel panel-pad">
+        <section class="dept-block">
+          <div class="dept-head">
+            <div>
+              <strong>Rivon</strong>
+              <p class="muted" style="margin: 4px 0 0; font-size: 13px">Default SLA 10 days</p>
+            </div>
+            <div>
+              <button class="quiet" type="button">Edit</button>
+              <button class="quiet" type="button">Add category</button>
+              <button class="quiet" type="button">Deactivate</button>
+            </div>
+          </div>
+          <div class="tree-row">Car <span class="head-actions"><button class="quiet" type="button">Edit</button><button class="quiet" type="button">Deactivate</button></span></div>
+        </section>
+        <section class="dept-block">
+          <div class="dept-head">
+            <div>
+              <strong>Rover</strong>
+              <p class="muted" style="margin: 4px 0 0; font-size: 13px">Default SLA 10 days</p>
+            </div>
+            <div>
+              <button class="quiet" type="button">Edit</button>
+              <button class="quiet" type="button">Add category</button>
+              <button class="quiet" type="button">Deactivate</button>
+            </div>
+          </div>
+          <div class="tree-row">Bike <span><button class="quiet" type="button">Edit</button><button class="quiet" type="button">Deactivate</button></span></div>
+        </section>
+        <section class="dept-block">
+          <div class="dept-head">
+            <div>
+              <strong>Assidua</strong>
+              <p class="muted" style="margin: 4px 0 0; font-size: 13px">Default SLA 10 days</p>
+            </div>
+            <div>
+              <button class="quiet" type="button">Edit</button>
+              <button class="quiet" type="button">Add category</button>
+              <button class="quiet" type="button">Deactivate</button>
+            </div>
+          </div>
+          <div class="tree-row">A/C <span><button class="quiet" type="button">Edit</button><button class="quiet" type="button">Deactivate</button></span></div>
+          <div class="tree-row">UPS <span><button class="quiet" type="button">Edit</button><button class="quiet" type="button">Deactivate</button></span></div>
+          <div class="tree-row">Smart Board <span><button class="quiet" type="button">Edit</button><button class="quiet" type="button">Deactivate</button></span></div>
+          <div class="tree-row">Home Appliances <span class="chip">Group</span> <span><button class="quiet" type="button">Edit</button><button class="quiet" type="button">Add category</button><button class="quiet" type="button">Deactivate</button></span></div>
+          <div class="tree">
+            <div class="tree-row">Tv <span><button class="quiet" type="button">Edit</button><button class="quiet" type="button">Deactivate</button></span></div>
+            <div class="tree-row">Washing Machine <span><button class="quiet" type="button">Edit</button><button class="quiet" type="button">Deactivate</button></span></div>
+            <div class="tree-row muted">Fridge <span class="chip">Inactive</span> <span><button class="quiet" type="button">Edit</button><button class="quiet" type="button">Reactivate</button></span></div>
+          </div>
+        </section>
+      </div>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>

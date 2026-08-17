@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Settings — Assidua Ops</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="staff.css" />
+  </head>
+  <body data-page="settings">
+    <div id="content">
+      <div class="head">
+        <div>
+          <h1>Notifications</h1>
+          <p class="sub">Who receives these is fixed by role. Report email is always on.</p>
+        </div>
+        <button class="btn" type="button">Save</button>
+      </div>
+      <div class="stack" style="max-width: 720px">
+        <div class="panel panel-pad">
+          <div class="section-title">Staff events</div>
+          <div class="toggle">Job created <span><span class="chip">In-app</span> <span class="switch" title="On"></span></span></div>
+          <div class="toggle">Job created email <span class="switch" title="On"></span></div>
+          <div class="toggle">Job department changed <span class="switch" title="On"></span></div>
+          <div class="toggle">Job department changed email <span class="switch" title="On"></span></div>
+          <div class="toggle">Job at risk <span class="switch" title="On"></span></div>
+          <div class="toggle" style="border-bottom: 0">Job at risk email <span class="switch" title="On"></span></div>
+        </div>
+        <div class="panel panel-pad">
+          <div class="section-title">Customer SMS</div>
+          <div class="toggle">Send SMS when an inquiry is created <span class="switch off" title="Off"></span></div>
+          <p class="hint">Off by default. One SMS per inquiry, even with multiple jobs.</p>
+          <div class="field">
+            <label for="tpl">English template</label>
+            <textarea id="tpl">Your inquiry {INQUIRY_NUMBER} was received ({JOB_COUNT} job(s)). We will be in touch.</textarea>
+          </div>
+          <p class="hint">Must include {INQUIRY_NUMBER} and {JOB_COUNT}. No resend in MVP.</p>
+        </div>
+      </div>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>

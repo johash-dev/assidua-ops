@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Staff — Assidua Ops</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="staff.css" />
+  </head>
+  <body data-page="staff">
+    <div id="content">
+      <div class="head">
+        <div>
+          <h1>Staff</h1>
+          <p class="sub">Exactly one role per user. One department head per department.</p>
+        </div>
+        <a class="btn" href="staff-users.html#new">New staff</a>
+      </div>
+      <div class="panel">
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Department</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Priya Fernando</td>
+              <td>priya@assidua.lk</td>
+              <td>Admin</td>
+              <td class="muted">—</td>
+              <td><a class="quiet" href="staff-users.html#edit">Edit</a></td>
+            </tr>
+            <tr>
+              <td>Ruwan Bandara</td>
+              <td>ruwan@assidua.lk</td>
+              <td>Department Head</td>
+              <td>Rivon</td>
+              <td><a class="quiet" href="staff-users.html#replace">Replace</a></td>
+            </tr>
+            <tr>
+              <td>Amaya Jayasuriya</td>
+              <td>amaya@assidua.lk</td>
+              <td>Front Desk</td>
+              <td class="muted">—</td>
+              <td><a class="quiet" href="staff-users.html#edit">Edit</a></td>
+            </tr>
+            <tr>
+              <td>Sajith Perera</td>
+              <td>sajith@assidua.lk</td>
+              <td>Coordinator</td>
+              <td class="muted">—</td>
+              <td><a class="quiet" href="staff-users.html#edit">Edit</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="overlay" id="dlg-new" hidden>
+        <div class="dialog">
+          <h2>New staff</h2>
+          <div class="field"><label>Name</label><input /></div>
+          <div class="field"><label>Email</label><input type="email" /></div>
+          <div class="field"><label>Password</label><input type="password" placeholder="At least 8 characters" /></div>
+          <div class="field">
+            <label>Role</label>
+            <select>
+              <option>Front Desk</option>
+              <option>Coordinator</option>
+              <option>Department Head</option>
+              <option>Admin</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Department (DH only)</label>
+            <select>
+              <option>Rivon</option>
+              <option>Rover</option>
+              <option>Assidua</option>
+            </select>
+          </div>
+          <div class="dialog-actions">
+            <a class="btn-ghost" href="staff-users.html">Cancel</a>
+            <a class="btn" href="staff-users.html">Save</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="overlay" id="dlg-replace" hidden>
+        <div class="dialog">
+          <h2>Replace Rivon department head</h2>
+          <p class="sub">A department must have exactly one department head. This is one save.</p>
+          <div class="field">
+            <label>Outgoing</label>
+            <div class="locked">Ruwan Bandara · Department Head · Rivon</div>
+          </div>
+          <div class="field">
+            <label>Incoming</label>
+            <select>
+              <option>Isuru Perera (new DH)</option>
+              <option>Amaya Jayasuriya</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Outgoing becomes</label>
+            <select>
+              <option>Front Desk</option>
+              <option>Coordinator</option>
+              <option>Deactivated</option>
+            </select>
+          </div>
+          <div class="dialog-actions">
+            <a class="btn-ghost" href="staff-users.html">Cancel</a>
+            <a class="btn" href="staff-users.html">Save replacement</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="overlay" id="dlg-edit" hidden>
+        <div class="dialog">
+          <h2>Edit staff</h2>
+          <div class="field"><label>Name</label><input value="Amaya Jayasuriya" /></div>
+          <div class="field"><label>Email</label><input value="amaya@assidua.lk" /></div>
+          <div class="field"><label>Reset password</label><input type="password" placeholder="Leave blank to keep" /></div>
+          <div class="field">
+            <label>Role</label>
+            <select><option selected>Front Desk</option><option>Coordinator</option><option>Department Head</option><option>Admin</option></select>
+          </div>
+          <div class="dialog-actions">
+            <a class="btn-ghost" href="staff-users.html">Cancel</a>
+            <a class="btn" href="staff-users.html">Save</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>

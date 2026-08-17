@@ -22,6 +22,8 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import { StaffShell } from "@/app/staff-shell";
+import { api } from "@/lib/api";
 
 type CategoryDto = {
   id: string;
@@ -52,29 +54,7 @@ type ConfirmState =
   | null;
 
 const selectClass =
-  "h-9 w-full rounded-md border border-input bg-background px-3 text-sm";
-
-async function api<T>(path: string, init?: RequestInit): Promise<T> {
-  const res = await fetch(path, {
-    ...init,
-    headers: {
-      "content-type": "application/json",
-      // ponytail: F-002 deletes this. Next inlines NODE_ENV so production builds do not send it.
-      ...(process.env.NODE_ENV === "production"
-        ? {}
-        : { "X-Test-Role": "ADMIN" }),
-      ...(init?.headers ?? {}),
-    },
-  });
-  const body = (await res.json().catch(() => ({}))) as {
-    code?: string;
-    message?: string;
-  } & T;
-  if (!res.ok) {
-    throw new Error(body.message ?? body.code ?? `HTTP ${res.status}`);
-  }
-  return body as T;
-}
+  "h-8 w-full rounded-md border border-input bg-background px-3 text-sm";
 
 function flatten(
   nodes: CategoryDto[],
@@ -248,7 +228,8 @@ export default function TaxonomyPage() {
   }
 
   return (
-    <main className="mx-auto flex min-h-screen max-w-2xl flex-col p-8">
+    <StaffShell requireAdmin>
+    <main className="mx-auto flex max-w-2xl flex-col p-8">
       <header className="mb-8 flex items-start justify-between gap-4">
         <div className="space-y-1">
           <h1 className="text-2xl font-semibold tracking-tight">Taxonomy</h1>
@@ -460,6 +441,7 @@ export default function TaxonomyPage() {
         </AlertDialogContent>
       </AlertDialog>
     </main>
+    </StaffShell>
   );
 }
 

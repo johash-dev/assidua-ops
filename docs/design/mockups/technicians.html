@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Technicians — Assidua Ops</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="staff.css" />
+  </head>
+  <body data-page="technicians">
+    <div id="content">
+      <div class="head">
+        <div>
+          <h1>Technicians</h1>
+          <p class="sub" data-show="fd">Read-only directory.</p>
+          <p class="sub" data-show="dh">Rivon pool. Filter: Active.</p>
+        </div>
+        <a class="btn" data-show="dh,admin" href="technician-form.html">New technician</a>
+      </div>
+      <div class="panel">
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Phone</th>
+              <th>Email</th>
+              <th>Department</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><a class="row-link" href="technician-form.html">Kasun Fernando</a></td>
+              <td>077 555 0101</td>
+              <td class="muted">kasun@example.lk</td>
+              <td>Rivon</td>
+              <td><a class="quiet" data-show="dh,admin" href="#">Deactivate</a></td>
+            </tr>
+            <tr>
+              <td><a class="row-link" href="technician-form.html">Isuru Perera</a></td>
+              <td>077 555 0102</td>
+              <td class="muted">—</td>
+              <td>Rivon</td>
+              <td><a class="quiet" data-show="dh,admin" href="#">Deactivate</a></td>
+            </tr>
+            <tr data-hide="dh">
+              <td><a class="row-link" href="technician-form.html">Fathima Rizwan</a></td>
+              <td>077 555 0201</td>
+              <td class="muted">fathima@example.lk</td>
+              <td>Assidua</td>
+              <td><a class="quiet" data-show="admin" href="#">Deactivate</a></td>
+            </tr>
+            <tr data-hide="dh">
+              <td><a class="row-link" href="technician-form.html">Nuwan Silva</a></td>
+              <td>077 555 0301</td>
+              <td class="muted">—</td>
+              <td>Rover</td>
+              <td><a class="quiet" data-show="admin" href="#">Deactivate</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>

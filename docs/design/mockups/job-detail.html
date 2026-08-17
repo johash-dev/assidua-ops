@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Job — Assidua Ops</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="staff.css" />
+  </head>
+  <body data-page="job-detail">
+    <div id="content">
+      <div class="head">
+        <div>
+          <h1>Car</h1>
+          <p class="sub">
+            <span class="mono">20260813-001</span> · Nimal Perera
+            <span data-job="open"> · <span class="pill progress">In Progress</span> · <span class="pill risk">At risk</span></span>
+            <span data-job="new"> · <span class="pill new">New</span></span>
+            <span data-job="cancelled"> · <span class="pill cancelled">Cancelled</span></span>
+          </p>
+        </div>
+        <a class="btn-ghost" href="jobs.html">Back to jobs</a>
+      </div>
+
+      <div class="grid-2">
+        <div class="stack">
+          <div class="panel panel-pad">
+            <div class="section-title">Job</div>
+            <div class="kv">
+              <dt>Issue</dt>
+              <dd>Engine warning light after highway drive</dd>
+              <dt>Site</dt>
+              <dd>Home — Dehiwala, 42 Galle Road</dd>
+              <dt>Priority</dt>
+              <dd>Urgent</dd>
+              <dt>Category</dt>
+              <dd>Rivon → Car</dd>
+              <dt>Deadline</dt>
+              <dd>23 Aug 2026</dd>
+            </div>
+            <p class="hint" data-show="fd" data-job="open">Fields lock after a technician is selected.</p>
+            <div class="head-actions" style="margin-top: 16px">
+              <a class="btn-ghost" data-show="fd" data-job="new" href="#">Edit fields</a>
+              <a class="btn-ghost" data-show="dh,admin" data-job="open,new" href="job-detail.html#sla">Override deadline</a>
+            </div>
+          </div>
+          <div class="panel panel-pad" data-show="dh,admin">
+            <div class="section-title">Notes</div>
+            <div data-job="open">
+              <div class="note">
+                <div class="note-meta">Kasun Fernando · Technician · 13 Aug 2026, 09:40</div>
+                Arrived on site. Scanning ECU now.
+              </div>
+              <div class="note">
+                <div class="note-meta">Ruwan Bandara · Department Head · 13 Aug 2026, 10:12</div>
+                Customer asked for an update by evening.
+              </div>
+            </div>
+            <p class="muted" data-job="new">No notes yet.</p>
+            <div class="field" style="margin-top: 16px">
+              <label for="note">Add note</label>
+              <textarea id="note" placeholder="Notes can be added, not edited."></textarea>
+            </div>
+            <button class="btn" type="button">Add note</button>
+          </div>
+          <p class="hint" data-show="fd,coord">Front Desk and Coordinators cannot add notes.</p>
+        </div>
+        <div class="stack">
+          <div class="panel panel-pad">
+            <div class="section-title">Assignment</div>
+            <p style="margin: 0 0 12px" data-job="open">Kasun Fernando · 077 555 0101</p>
+            <p class="muted" style="margin: 0 0 12px" data-job="new,cancelled">Unassigned</p>
+            <div class="head-actions" data-show="dh,admin" data-job="open,new">
+              <a class="btn" href="job-detail.html#assign">Assign technician</a>
+              <a class="btn-ghost" data-job="open" href="job-detail.html#whatsapp">Resend link</a>
+            </div>
+            <p class="hint" data-show="fd,coord">Only Department Head or Admin can assign.</p>
+          </div>
+          <div class="panel panel-pad" data-show="dh,admin" data-job="open">
+            <div class="section-title">Lifecycle</div>
+            <div class="field">
+              <label for="status">Status</label>
+              <select id="status">
+                <option>In Progress</option>
+                <option>On Hold</option>
+                <option>Resolved</option>
+              </select>
+            </div>
+            <p class="hint">Close requires the job to be Resolved. New and Assigned are not set here.</p>
+            <div class="head-actions" style="margin-top: 16px">
+              <button class="btn" type="button" disabled>Close</button>
+              <a class="btn-ghost" href="job-detail.html#cancel">Cancel</a>
+            </div>
+          </div>
+          <div class="panel panel-pad" data-show="dh,admin" data-job="cancelled">
+            <div class="section-title">Cancelled</div>
+            <div class="field">
+              <label for="cr">Cancel reason</label>
+              <textarea id="cr">Customer postponed the visit</textarea>
+            </div>
+            <p class="hint">Editable only while Cancelled.</p>
+            <div class="head-actions" style="margin-top: 16px">
+              <a class="btn" href="job-detail.html#reopen">Reopen</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="overlay" id="dlg-assign" hidden>
+        <div class="dialog">
+          <h2>Assign technician</h2>
+          <p class="sub">The technician gets a job link. They do not need an account.</p>
+          <div class="field">
+            <label for="tech">Technician</label>
+            <select id="tech">
+              <option>Kasun Fernando · Rivon · 077 555 0101</option>
+              <option>Isuru Perera · Rivon · 077 555 0102</option>
+              <option data-show="admin">Fathima Rizwan · Assidua · 077 555 0201</option>
+              <option data-show="admin">Nuwan Silva · Rover · 077 555 0301</option>
+            </select>
+          </div>
+          <p class="hint" data-show="dh">Only active Rivon technicians.</p>
+          <p class="hint" data-show="admin">Admin may select any active technician.</p>
+          <div class="dialog-actions">
+            <a class="btn-ghost" href="job-detail.html">Cancel</a>
+            <a class="btn" href="job-detail.html#whatsapp">Assign and send WhatsApp</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="overlay" id="dlg-whatsapp" hidden>
+        <div class="dialog">
+          <h2>WhatsApp could not be sent</h2>
+          <p class="sub">Copy the message and share it yourself. The assignment is saved.</p>
+          <pre class="copy-box">https://ops.example/t/ab12x9k
+Nimal Perera
+Home — Dehiwala
+Engine warning light after highway drive
+Urgent</pre>
+          <p class="hint">Does not include customer phone, email, or primary address.</p>
+          <div class="dialog-actions">
+            <a class="btn-ghost" href="job-detail.html">Close</a>
+            <a class="btn" href="tech-job.html">Open technician link</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="overlay" id="dlg-cancel" hidden>
+        <div class="dialog">
+          <h2>Cancel job</h2>
+          <p class="sub">Notes remain. The technician link will stop working.</p>
+          <div class="field">
+            <label for="reason">Reason</label>
+            <textarea id="reason" placeholder="Required"></textarea>
+          </div>
+          <div class="dialog-actions">
+            <a class="btn-ghost" href="job-detail.html">Keep job</a>
+            <a class="btn-danger" href="job-detail.html?job=cancelled">Cancel job</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="overlay" id="dlg-reopen" hidden>
+        <div class="dialog">
+          <h2>Reopen job</h2>
+          <p class="sub">If a technician is present, status becomes Assigned. Otherwise New.</p>
+          <label class="radio"><input type="radio" name="d" checked /> Keep current deadline</label>
+          <label class="radio"><input type="radio" name="d" /> Restart from today using department SLA</label>
+          <label class="radio"><input type="radio" name="d" /> Set a custom date</label>
+          <div class="field">
+            <label for="custom">Custom date</label>
+            <input id="custom" type="date" disabled />
+          </div>
+          <p class="hint">Custom date cannot be in the past (Asia/Colombo).</p>
+          <div class="dialog-actions">
+            <a class="btn-ghost" href="job-detail.html?job=cancelled">Keep cancelled</a>
+            <a class="btn" href="job-detail.html">Reopen</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="overlay" id="dlg-sla" hidden>
+        <div class="dialog">
+          <h2>Update default SLA</h2>
+          <p class="sub" data-show="dh">Rivon only.</p>
+          <div class="field">
+            <label for="n">Default SLA days</label>
+            <input id="n" type="number" min="1" value="7" />
+          </div>
+          <div class="field">
+            <label>Also update open jobs that do not have a per-job deadline override?</label>
+            <label class="radio"><input type="radio" name="b" /> Yes</label>
+            <label class="radio"><input type="radio" name="b" /> No</label>
+          </div>
+          <p class="hint">This choice is required.</p>
+          <div class="dialog-actions">
+            <a class="btn-ghost" href="jobs.html">Cancel</a>
+            <a class="btn" href="jobs.html">Save</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>

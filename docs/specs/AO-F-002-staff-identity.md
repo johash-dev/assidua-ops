@@ -5,7 +5,7 @@
 **Authority:** `docs/requirements/Assidua-Ops-requirements-baseline.md` (FROZEN); `docs/architecture/Assidua-Ops-architecture-mvp.md` (HUMAN APPROVED); ADR-002, ADR-007  
 **Breakdown:** `docs/specs/AO-MVP-001-feature-breakdown.md`  
 **Depends on:** AO-F-001 (Department for DH assignment)  
-**Status:** HUMAN APPROVED (2026-08-12)  
+**Status:** HUMAN APPROVED (2026-08-12); **UI contract:** HUMAN APPROVED (2026-08-18); **PLAN:** HUMAN APPROVED (2026-08-18)  
 **Module:** `identity`
 
 ---
@@ -117,6 +117,99 @@ As an Admin, I create and manage staff accounts and roles (including one-step DH
 
 ---
 
+## UI contract
+
+**Drafted:** 2026-08-18  
+**Status:** HUMAN APPROVED (2026-08-18) — list + dialogs; Save stays on `/staff-users`; staff shell this slice; `/` stays public
+
+### Screens / routes
+
+| Route | Purpose |
+|-------|---------|
+| `/login` | Public sign-in (email + password). No staff chrome. |
+| `/home` | Signed-in landing: name + role. All staff. No dashboard widgets. |
+| `/staff-users` | Admin list of staff users; create/edit/deactivate/DH-replace in dialogs. |
+| `/taxonomy` | Existing Admin tree; wrap in staff shell (no taxonomy behavior change). |
+| `/forbidden` | Authenticated staff who opened a page their role cannot use. |
+| `/` | ENG-000 smoke/health. Stays **public**. Not a staff home. |
+
+No `/logout` page (shell control). No per-user `/staff-users/:id` routes. No non-Admin user-admin page. No technician login.
+
+### Primary flows
+
+1. **Sign in:** Open `/login` → email + password → Submit. Success: HTTP-only session cookie; Admin → `/taxonomy`; other staff → `/home`. Invalid/inactive: stay on `/login`, show one generic error. No SSO copy.
+2. **Log out:** Staff chrome **Log out** → `POST /auth/logout` → cookie cleared → `/login`.
+3. **Session missing:** Direct `/home`, `/staff-users`, or `/taxonomy` → `/login` (return URL not required in MVP).
+4. **View users (Admin):** Open `/staff-users` → table of seed + created users: name, email, role, department (DH only), Active/Inactive. Stay on page.
+5. **Create user:** **Add user** → name, email, password (≥ 8), role; if role is Department head, department required (Rivon/Rover/Assidua + later depts). Save → stay on `/staff-users`; new row visible.
+6. **Edit user:** **Edit** → name, email, optional new password, role, department if DH, active. Save → stay. Last-Admin / sole-DH / Admin≠DH / duplicate email → in-dialog or in-page alert from API `message`.
+7. **Deactivate:** Row **Deactivate** → confirm → on success shows Inactive; on last-Admin or sole-DH vacate, show server error and leave Active.
+8. **One-step DH replacement:** **Replace DH** (on a department that already has an active DH, or from the Users page) → pick incoming user + outgoing destination (Front desk / Coordinator / Admin / Inactive) → single Save → exactly one active DH remains for that department; stay on `/staff-users`.
+9. **Non-Admin:** No Users nav. Direct `/staff-users` → `/forbidden`. Direct `/taxonomy` → `/forbidden` (closes F-001 deferred access-denied).
+10. **Tech link:** No identity UI.
+
+### Role matrix
+
+| Chrome / action | Admin | DH | FD | Coordinator | Tech link |
+|-----------------|-------|----|----|-------------|-----------|
+| `/login` | Yes (signed-out) | Yes | Yes | Yes | **No** |
+| Staff chrome: name + role + Log out | Yes | Yes | Yes | Yes | — |
+| Nav: Home | Yes | Yes | Yes | Yes | — |
+| Nav: Taxonomy | Yes | **No** | **No** | **No** | — |
+| Nav: Users | Yes | **No** | **No** | **No** | — |
+| Open `/home` | Yes | Yes | Yes | Yes | — |
+| Open `/taxonomy` | Tree | Forbidden | Forbidden | Forbidden | — |
+| Open `/staff-users` | List | Forbidden | Forbidden | Forbidden | — |
+| Create / edit / deactivate / replace DH | Yes | **Hidden** | **Hidden** | **Hidden** | — |
+
+Server authz remains the boundary; hidden nav is UX only.
+
+### States
+
+| Screen | Empty | Loading | Validation | Error | Success |
+|--------|-------|---------|------------|-------|---------|
+| Login | Form | Submit pending | Email and password required | Generic sign-in rejected (invalid, inactive, or unknown) | Redirect as in flow 1 |
+| Home | Name + role | Spinner until `/auth/me` | — | Session missing → `/login` | — |
+| Users list | “No staff users” + Add user (seeded env is not empty) | Table spinner | — | Load failure | — |
+| Create/Edit dialog | — | Submit pending | Inline: name/email required (trim); password ≥ 8 on create and when provided on edit; DH requires department | Server rejects (duplicate email, last Admin, sole DH, Admin≠DH, non-Admin) as in-dialog or in-page alert | Close dialog; list refreshed; stay on `/staff-users` |
+| Deactivate confirm | — | Submit pending | — | Last-Admin / sole-DH from API; user stays active | Close; list refreshed |
+| Replace DH dialog | — | Submit pending | Incoming user and outgoing destination required | Second-DH / vacate / last-Admin from API | Close; list refreshed |
+| Forbidden | — | — | — | “You do not have access to this page.” + Log out | — |
+
+### Copy constraints
+
+- Labels from fields/spec only: Email, Password, Name, Role, Department, Active, Inactive, Sign in, Log out, Users, Taxonomy.
+- Role labels: Front desk, Coordinator, Department head, Admin (enum values stay `FRONT_DESK` etc. on the API).
+- Login must **not** mention SSO, magic link, or “forgot password”.
+- Inactive cannot sign in — do not explain “inactive” vs “wrong password” on `/login`.
+- No audit history on these screens (viewer is AO-F-012).
+- No technician-login copy.
+
+### Reuse
+
+- Look & feel: **ADR-009**. Existing `Button`, `Input`, `Dialog`, `AlertDialog`, `Alert`. Native `<select>` for role/department (same as taxonomy). Native `<table>` for the user list (rule-of-three).
+- Staff shell is **this** slice (F-001 deferred it). Taxonomy page drops `X-Test-Role` and uses `credentials: "include"`.
+- Shared PageHeader / EmptyState: **not** extracted.
+
+### Out of UI scope
+
+- Technician token login (AO-F-006)
+- Customer accounts
+- Self-service password reset, MFA, SSO
+- Audit log viewer (AO-F-012)
+- Job/customer/report chrome
+- Remember-me, session-list, “log out everywhere”
+- Title/org-label fields (not roles)
+
+### Open questions / human decisions (UI)
+
+1. List + dialogs vs `/staff-users/new` routes? → **list + dialogs** (proposed with PLAN).
+2. After login, Admin destination? → **`/taxonomy`**.
+3. After login, non-Admin destination? → **`/home`** (name + role; no dashboard).
+4. DH replace UX? → **dedicated dialog, one Save** (matches one-step replacement AC).
+
+---
+
 ## API behavior
 
 Internal NestJS HTTP API. Paths illustrative; behavior locked:
@@ -220,10 +313,13 @@ Broader Auth capability table (jobs, reports, etc.) enforced in later features u
 ## Definition of Done
 
 - [x] Human approves this spec **including auth mechanism decision**.
-- [ ] PLAN approved; implementation meets AC above.
-- [ ] Feature-owned tests + applicable E2E green.
-- [ ] Build/type/lint clean; security review for auth/session/secrets.
-- [ ] Seed path satisfies M35 + bootstrap Admin without committed secrets.
+- [x] UI contract human-approved.
+- [x] PLAN approved.
+- [x] Implementation meets AC above.
+- [x] Feature-owned tests + applicable E2E green.
+- [x] Build/type/lint clean.
+- [ ] Independent security review for auth/session/secrets.
+- [x] Seed path satisfies M35 + bootstrap Admin without committed secrets.
 - [ ] Breakdown row AO-F-002 → Approved/Complete when done.
 
 ---
@@ -244,4 +340,10 @@ Amend via explicit change if any of the above is wrong.
 
 ## Human approval
 
-**Approved (2026-08-12).** PLAN may proceed for AO-F-002 (after AO-ENG-000 / AO-F-001 as needed). No production code in this artifact.
+**Spec approved (2026-08-12)** as written.
+
+**Stop point — UI contract.** No PLAN / production UI until this contract is approved (may be approved together with the PLAN).
+
+- [x] Approve AO-F-002 UI contract as written — **HUMAN APPROVED 2026-08-18**
+- [ ] Approve with amendments: _______________________
+- [ ] Reject / replan UI contract

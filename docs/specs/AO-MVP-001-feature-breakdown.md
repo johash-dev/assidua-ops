@@ -23,7 +23,7 @@
 |------:|----|-------|------------|----------------|-------------|
 | 0 | AO-ENG-000 | Platform foundation (Next.js + NestJS + Prisma + CI skeleton) | — | — | **COMPLETE** (2026-08-13) |
 | 1 | AO-F-001 | Department & category taxonomy | AO-ENG-000 | — | **IMPLEMENT complete; independent review passed (2026-08-18)** |
-| 2 | AO-F-002 | Staff identity (login/session + Admin user/role management + sole-DH rules) | AO-F-001 (Department exists for DH) | — | **HUMAN APPROVED (2026-08-12)** |
+| 2 | AO-F-002 | Staff identity (login/session + Admin user/role management + sole-DH rules) | AO-F-001 (Department exists for DH) | — | **IMPLEMENT complete (2026-08-18); awaiting review** |
 | 3 | AO-F-003 | Customers & sites | AO-F-002 | — | **HUMAN APPROVED (2026-08-12)** |
 | 4 | AO-F-004 | Technician directory | AO-F-001, AO-F-002 | **I56** blocks DH primary-dept-change authz | **HUMAN APPROVED (2026-08-12)** |
 | 5 | AO-F-005 | Inquiry & job intake (atomic multi-job create + inquiry number + FD/DH/Admin edit rules pre-assignment) | AO-F-001–004 | — | **HUMAN APPROVED (2026-08-12); RC-001 amend CONFIRMED (2026-08-13)** |
@@ -89,5 +89,5 @@ Cross-cutting writes (audit entries, timeline events, notifications) are **emitt
 
 ## Next exact step
 
-1. DESIGN (if needed) then PLAN for **AO-F-002** (staff identity / login).
-2. Include RC-001 in F-005 / F-009 PLANs when those slices start. Skip DESIGN only when the slice has no staff/customer UI (e.g. F-010).
+1. Independent **REVIEW** of AO-F-002 (then security check).
+2. DESIGN (if needed) then PLAN for **AO-F-003** (customers & sites).

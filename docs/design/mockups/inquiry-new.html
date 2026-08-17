@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>New inquiry — Assidua Ops</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="staff.css" />
+  </head>
+  <body data-page="inquiry-new">
+    <div id="content">
+      <div class="head">
+        <div>
+          <h1>New inquiry</h1>
+          <p class="sub">One customer call. One or more jobs. Saved together.</p>
+          <p class="sub" data-show="dh">Jobs must use Rivon leaves only.</p>
+        </div>
+        <a class="btn-ghost" href="inquiries.html">Cancel</a>
+      </div>
+      <div class="stack" style="max-width: 720px">
+        <div class="panel panel-pad">
+          <div class="section-title">Customer</div>
+          <div class="field">
+            <label for="q">Search name or phone</label>
+            <input id="q" value="Nimal" />
+          </div>
+          <p class="hint">Duplicates allowed — pick the correct record.</p>
+          <div class="job-card">Nimal Perera · 077 123 4567 · 12 Galle Road, Colombo 03</div>
+          <div class="job-card muted">Nimal Perera · 071 888 2211 · 88 Baseline Road, Colombo 09</div>
+          <div class="head-actions" style="margin-top: 12px">
+            <a class="quiet" href="customer-detail.html">Edit customer</a>
+            <a class="quiet" href="customers.html">New customer</a>
+          </div>
+        </div>
+        <div class="panel panel-pad">
+          <div class="section-title">Job 1</div>
+          <div class="field">
+            <label for="cat1">Category</label>
+            <select id="cat1">
+              <option>Rivon → Car</option>
+              <option data-hide="dh">Rover → Bike</option>
+              <option data-hide="dh">Assidua → A/C</option>
+              <option data-hide="dh">Assidua → Home Appliances → Tv</option>
+            </select>
+          </div>
+          <p class="hint">Department: Rivon</p>
+          <div class="field">
+            <label for="site1">Site</label>
+            <select id="site1">
+              <option>Home — Dehiwala</option>
+              <option>Office — Union Place</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="issue1">Issue</label>
+            <textarea id="issue1">Engine warning light after highway drive</textarea>
+          </div>
+          <div class="field">
+            <label for="pri1">Priority</label>
+            <select id="pri1">
+              <option>Low</option>
+              <option>Normal</option>
+              <option>High</option>
+              <option selected>Urgent</option>
+            </select>
+          </div>
+        </div>
+        <div class="panel panel-pad" data-hide="dh">
+          <div class="section-title">Job 2</div>
+          <div class="field">
+            <label for="cat2">Category</label>
+            <select id="cat2">
+              <option>Assidua → A/C</option>
+              <option>Rivon → Car</option>
+              <option>Assidua → UPS</option>
+            </select>
+          </div>
+          <p class="hint">Department: Assidua</p>
+          <div class="field">
+            <label for="site2">Site</label>
+            <select id="site2">
+              <option>Home — Dehiwala</option>
+              <option>Office — Union Place</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="issue2">Issue</label>
+            <textarea id="issue2">Indoor unit not cooling</textarea>
+          </div>
+          <div class="field">
+            <label for="pri2">Priority</label>
+            <select id="pri2">
+              <option>Low</option>
+              <option selected>Normal</option>
+              <option>High</option>
+              <option>Urgent</option>
+            </select>
+          </div>
+          <button class="quiet" type="button">Remove job</button>
+        </div>
+        <div class="head-actions">
+          <button class="btn-ghost" type="button" data-hide="dh">Add another job</button>
+          <a class="btn" href="inquiry-detail.html">Create inquiry</a>
+        </div>
+        <p class="hint">If any job is invalid, nothing is saved.</p>
+      </div>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>
