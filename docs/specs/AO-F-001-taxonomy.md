@@ -4,7 +4,7 @@
 **Parent:** AO-MVP-001  
 **Authority:** `docs/requirements/Assidua-Ops-requirements-baseline.md` (FROZEN); `docs/architecture/Assidua-Ops-architecture-mvp.md` (HUMAN APPROVED); ADR-001  
 **Breakdown:** `docs/specs/AO-MVP-001-feature-breakdown.md`  
-**Status:** HUMAN APPROVED (2026-08-12)  
+**Status:** HUMAN APPROVED (2026-08-12); **UI contract:** HUMAN APPROVED (2026-08-13)  
 **Module:** `taxonomy`
 
 ---
@@ -81,6 +81,96 @@ As an Admin, I manage departments and category leaves (including nested non-leaf
 - Admin UI: manage departments and category tree (add/edit/deactivate); set department default SLA days (≥ 1).
 - Non-Admin staff: no taxonomy management UI; may consume active-leaf lists where product surfaces need them (intake/reclassify land in later features).
 - Deactivated leaves/departments do not appear as selectable intake options.
+
+---
+
+## UI contract
+
+**UI in scope:** yes  
+**Drafted:** 2026-08-13 (UI/UX Agent)  
+**Status:** HUMAN APPROVED (2026-08-13) — tree + dialogs; Save stays on `/taxonomy`; inactive always visible; add-category on department/group only; leaf department change on edit
+
+### Screens / routes
+
+| Route | Purpose |
+|-------|---------|
+| `/taxonomy` | Admin tree: departments with nested groups and leaves; create/edit/deactivate/reactivate in-place |
+
+No separate create/edit routes. No non-Admin taxonomy page. Intake leaf pickers are not this feature.
+
+### Primary flows
+
+1. **View (Admin):** Open `/taxonomy` → seeded tree visible: Rivon → Car; Rover → Bike; Assidua → A/C, UPS, Smart Board, Home Appliances → Tv, Washing Machine, Fridge. Leaves and groups are distinguishable. Inactive nodes stay on the tree, labeled Inactive.
+2. **Create department:** **Add department** → name + Default SLA days (integer ≥ 1; field default **10**) → Save → stay on `/taxonomy` with the new department (active).
+3. **Create category:** From a department or a **group** → **Add category** → name, type **Leaf** or **Group**, parent pre-filled (department root or that group; changeable to another group/root **in the same department**) → Save → stay on tree. Not offered on a leaf.
+4. **Edit department:** **Edit** → name and/or Default SLA days → Save → stay on tree. **No** “update open jobs without override?” prompt (AO-F-008).
+5. **Edit category:** **Edit** → name; parent within the same department (root or group, never a leaf). If the node is a **leaf**, department may be changed (parent then must be root or a group in the **new** department). Save → stay on tree. If any job references the leaf, department change is rejected in-page; name/parent-within-dept still allowed.
+6. **Deactivate:** From the tree row → **Deactivate** → confirm → on success, node shows Inactive; on job-reference block (leaf or department), show server error and leave it active. No reclassify wizard.
+7. **Reactivate:** On an inactive department or node → **Reactivate** (no job-reference gate) → active again.
+8. **Non-Admin (DH / FD / Coordinator):** No nav entry. Direct `/taxonomy` → access denied (same forbidden-page pattern as other staff pages).
+9. **Tech link:** No taxonomy UI.
+
+`isLeaf` / type is set at create only — no Leaf ↔ Group conversion control.
+
+### Role matrix
+
+| Chrome / action | Admin | DH | FD | Coordinator | Tech link |
+|-----------------|-------|----|----|-------------|-----------|
+| Nav: Taxonomy | Yes | **No** | **No** | **No** | **No** |
+| Open `/taxonomy` | Tree | Access denied | Access denied | Access denied | — |
+| See inactive nodes | Yes | — | — | — | — |
+| Add department / category | Yes | **Hidden** | **Hidden** | **Hidden** | — |
+| Edit name / SLA days / parent | Yes | **Hidden** | **Hidden** | **Hidden** | — |
+| Change leaf department | Yes (server may reject if referenced) | **Hidden** | **Hidden** | **Hidden** | — |
+| Deactivate / Reactivate | Yes | **Hidden** | **Hidden** | **Hidden** | — |
+
+Server authz remains the boundary; hidden controls are UX only. Non-Admin **GET /taxonomy** for intake options is API-only; those pickers land in AO-F-005 / later surfaces.
+
+### States
+
+| Screen | Empty | Loading | Validation | Error | Success |
+|--------|-------|---------|------------|-------|---------|
+| Tree | “No departments” + Add department (seeded env is not empty) | Tree skeleton/spinner | — | Load failure message | — |
+| Create/Edit dialog | — | Submit pending | Inline: name required (trim); Default SLA days integer ≥ 1; category type required on create | Server rejects (SLA days below 1, invalid/cross-dept parent, leaf department-move while referenced, deactivate while referenced, non-Admin) as in-dialog or in-page alert | Close dialog; tree refreshed; stay on `/taxonomy` |
+| Deactivate confirm | — | Submit pending | — | Job-reference block from API; node stays active | Close dialog; tree refreshed |
+| Forbidden | — | — | — | Standard access-denied page for DH/FD/Coordinator (and unauthenticated once F-002 exists) | — |
+
+### Copy constraints
+
+- Labels from fields/spec only: Name, Default SLA days, Leaf, Group, Parent, Active, Inactive.
+- Type help (optional, one line): Leaf is selectable at intake; Group is not.
+- Deactivate confirm: department or node will no longer be offered for intake; do not invent “reclassify jobs first” as a product flow. Job-reference block: surface the API/meaningful error.
+- No bulk-SLA / deadline copy on this screen (AO-F-008).
+- No marketing headlines; no audit history on this page (I45).
+
+### Reuse
+
+- Staff shell/nav from AO-F-002 when it exists (this slice does not build login).
+- Look & feel: **ADR-009** (Tailwind + shadcn/`components/ui` + shared tokens). Existing `Button`; add `Input` / `Select` / `Alert` / `ConfirmDialog` / `PageHeader` / `EmptyState` when this screen needs them — no per-feature visual system.
+- Tree is a nested list, not a new tree-kit.
+- **Density (amended after first implement):** departments are section headers; row actions are quiet ghost controls; label **Group** and **Inactive** only — do not stamp Active/Leaf on every row.
+- Access-denied page: same as other forbidden staff routes (F-002 / later shell).
+
+### Out of UI scope
+
+- Staff login/session and user admin (AO-F-002)
+- Intake / reclassify / FD category pickers (AO-F-005 / F-007)
+- SLA bulk “update open jobs without override?” prompt and deadline recalc (AO-F-008)
+- Audit log viewer (AO-F-012)
+- Hard-delete
+- Search, sort, collapse-as-product, or Active/Inactive filter (tree is small; Admin must see inactive to reactivate)
+- Changing Leaf ↔ Group after create
+- Add category under a leaf
+- Read-only taxonomy page for non-Admin
+- Dual-DH notify on leaf department move (no jobs owned here)
+
+### Open questions / human decisions (UI)
+
+1. ~~One tree page + dialogs vs list/new/id routes?~~ → **tree + dialogs** (HUMAN DECIDED).
+2. ~~After Save: stay vs leave?~~ → **stay on `/taxonomy`** (HUMAN DECIDED).
+3. ~~Inactive filter?~~ → **always visible; no filter** (HUMAN DECIDED).
+4. ~~Add category on leaves?~~ → **department or group only** (HUMAN DECIDED).
+5. ~~Leaf department change UX?~~ → **on edit dialog; server reject if referenced** (HUMAN DECIDED).
 
 ---
 
@@ -179,12 +269,13 @@ Server-side only (NFR-4). Depends on AO-F-002 for real staff sessions; until Ide
 
 ## Definition of Done
 
-- [ ] This spec human-approved.
-- [ ] Implementation plan approved (PLAN).
+- [x] This spec human-approved.
+- [x] UI contract human-approved.
+- [x] Implementation plan approved (PLAN).
 - [ ] Seed + Admin CRUD + deactivate guards meet acceptance criteria above.
 - [ ] Feature-owned tests green; applicable E2E green when UI+auth available.
 - [ ] Build/type/lint clean for touched packages.
-- [ ] Independent review passed.
+- [x] Independent review passed.
 - [ ] Breakdown status for AO-F-001 updated to Approved/Complete.
 - [ ] No silent resolution of deferred requirements IDs.
 
@@ -198,8 +289,16 @@ Resolved by human approval as written (2026-08-12):
 2. **Non-Admin taxonomy GET:** Authenticated staff (including Coordinators) may read active leaves (locked).
 3. **E2E sequencing:** Taxonomy API + seed may proceed in PLAN under Admin auth from AO-F-002 (or test harness until F-002); full Admin UI Playwright waits on F-002 session. Not a requirements gap.
 
+**UI (decided 2026-08-13):** tree + dialogs; Save stays on `/taxonomy`; inactive always visible; add-category on department/group only; leaf department change on edit (server reject if referenced).
+
 ---
 
 ## Human approval
 
-**Approved (2026-08-12)** as written. PLAN may proceed for AO-F-001 (after or alongside AO-ENG-000). No production code in this artifact.
+**Spec approved (2026-08-12)** as written.
+
+**Stop point — UI contract.** No PLAN / production UI until this contract is approved.
+
+- [x] Approve AO-F-001 UI contract as written — **HUMAN APPROVED 2026-08-13**
+- [ ] Approve with amendments: _______________________
+- [ ] Reject / replan UI contract
