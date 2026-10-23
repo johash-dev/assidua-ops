@@ -15,6 +15,12 @@ if ! node -e "process.exit(require('./harness.config.json').stack.decided ? 0 : 
   exit 0
 fi
 
+if [[ ! -f package.json ]]; then
+  printf '\n⚠ verify.sh: application checks NOT CONFIGURED (stack decided in ADR-001, app not scaffolded yet: see AO-4).\n'
+  printf '  Only the harness selfcheck ran. Do not report app checks as passing.\n'
+  exit 0
+fi
+
 # --- Replace the lines below when wiring the chosen stack (ADR-001) ---
 step "format check";     echo "TODO: e.g. prettier --check ." && exit 3
 step "lint";             echo "TODO"

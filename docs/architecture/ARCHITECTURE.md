@@ -1,6 +1,18 @@
 # Architecture
 
-> Pending ADR-001 (stack) and ADR-002 (hosting). Update this file when they are accepted.
+> Stack: [ADR-001](decisions/ADR-001-stack.md), accepted. Hosting: ADR-002, pending. Update this file when it is accepted.
+
+## Stack (ADR-001)
+| Layer | Choice |
+|---|---|
+| Framework / runtime | Next.js 16.x on Node.js 24 (single process) |
+| Database | PostgreSQL 18, Drizzle ORM, SQL migrations in the repo |
+| Auth | Better Auth, username and password sessions |
+| Scheduler | pg-boss cron, `tz: 'Asia/Colombo'` |
+| Validation / UI | Zod; Tailwind + shadcn/ui |
+| Tests | Vitest (unit, integration on real PostgreSQL); Playwright + axe-core (e2e) |
+
+Development is zero-cost: local Docker PostgreSQL, Mailpit for email, a fake SMS adapter, local-disk files, and `wa.me` links for WhatsApp.
 
 ## Fixed constraints (proposal §12)
 - Staff web application, plus access-controlled technician link pages.
