@@ -1,13 +1,14 @@
 ---
 name: today
-description: Daily driver brief for Assidua Ops. Shows sprint board, in-flight stories, PRs/CI, environment versions, UAT/warranty clocks and proposal milestones, then names the single most important next task. Use at start of day or whenever unsure what to do next.
+description: Daily driver brief for Assidua Ops. Shows the board by status, in-flight stories, PRs/CI, environment versions, build-phase progress and UAT/warranty clocks, then names the single most important next task. Use at start of day or whenever unsure what to do next.
 ---
 
 Follow `docs/harness/skill-conventions.md`. This skill is **read-only**: it makes no Jira or GitHub writes.
 
 Gather, in parallel where possible:
 1. **Jira** (JQL, project from config):
-   - active sprint issues grouped by status
+   - open issues grouped by status (`statusCategory != Done`)
+   - build-phase progress: per epic, stories Done vs total
    - `assignee = currentUser() AND status in ("In Progress","In Review")`
    - top 3 `Ready` stories by rank
    - open Bugs by priority, with their `created` time
@@ -16,8 +17,7 @@ Gather, in parallel where possible:
    - `gh pr list -R <repo> --author @me --json number,title,headRefName,statusCheckRollup,reviewDecision`
    - `gh run list -R <repo> -L 5`
    - the latest successful run of deploy-qa / deploy-staging / deploy-prod (version or SHA per environment)
-3. **Clocks**, computed in Asia/Colombo:
-   - **Proposal week**: from `project.kickoffDate` (Week 1–4).
+3. **Client clocks** (contractual, not build schedule), computed in Asia/Colombo. Show each only once it has started:
    - **UAT business days left**: 20 from the UAT start recorded by `/release-uat`.
    - **Warranty months left**: counted from `project.goLiveDate`.
    - **Open warranty Bugs vs the §8 response targets**: flag Critical > 2h and High > 1 business day.
@@ -25,7 +25,7 @@ Gather, in parallel where possible:
 
 Render it compactly:
 ```
-## Today — <date> · Week n of 4 | UAT day n/20 | Warranty month n/6
+## Today — <date> · Phase: Foundation 3/8 | UAT day n/20 | Warranty month n/6   (omit clocks not started)
 🔥 Fires: …            (omit if none)
 ▶ In flight: AO-12 (In Progress, branch, CI ✓/✗)
 📋 Up next: AO-14, AO-15, AO-17

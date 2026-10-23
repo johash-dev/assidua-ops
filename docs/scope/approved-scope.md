@@ -106,15 +106,17 @@ Visibility: Department Heads see their department's jobs. Admin sees all.
 - A paid support retainer after the warranty
 - Any functionality outside this document
 
-## Weekly plan (§2)
-| Week | Focus | Deliverables |
-|---|---|---|
-| 1 | Foundation | User access; departments & categories; customers; technicians |
-| 2 | Core job workflow | Inquiry/job creation; technician assignment; WhatsApp links; job status & notes |
-| 3 | Operational features | Deadlines; notifications; scheduled reports; performance reports; activity history; attachments |
-| 4 | Launch readiness | Client UAT; final fixes; acceptance support; go-live prep |
+## Build order (dependency phases, from §2)
+The harness has no delivery dates. Work flows in this order because later phases depend on earlier ones:
 
-There is a demo against scope at the end of every week. Delays in access, decisions or feedback move the schedule (§5).
+| Phase | Capabilities |
+|---|---|
+| Foundation | User access; departments & categories; customers; technicians |
+| Core job workflow | Inquiry/job creation; technician assignment; WhatsApp links; job status & notes |
+| Operational features | Deadlines; notifications; scheduled reports; performance reports; activity history; attachments |
+| Launch readiness | Client UAT; final fixes; acceptance support; go-live prep |
+
+Client demos against scope happen whenever a phase is complete. They aren't scheduled by the harness.
 
 ## Acceptance (§7)
 - **UAT period:** 20 business days after the UAT build and checklist are delivered. The client gives written feedback with reproduction steps.

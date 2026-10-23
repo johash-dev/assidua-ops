@@ -1,7 +1,7 @@
 ---
 name: learn
-description: Turn a failure, bounce, defect or release into durable improvement at the right layer (regression test, business rule, doc, skill, hook, script) and update harness metrics. Use after a QA/UAT bounce, a review BLOCK, a hotfix, a wrong Next → routing, or at the end of each week/release.
-argument-hint: <AO-key | release-vX.Y.Z | week-N | free text>
+description: Turn a failure, bounce, defect or release into durable improvement at the right layer (regression test, business rule, doc, skill, hook, script) and update harness metrics. Use after a QA/UAT bounce, a review BLOCK, a hotfix, a wrong Next → routing, or at each release or build-phase milestone.
+argument-hint: <AO-key | release-vX.Y.Z | phase-<name> | free text>
 ---
 
 Follow `docs/harness/skill-conventions.md`.
@@ -25,7 +25,7 @@ Follow `docs/harness/skill-conventions.md`.
 5. On approval:
    - make the change on a branch (code/test/harness changes go through `/review` → `/ship`)
    - append a row to `docs/harness/lessons.md`
-6. **Metrics** (for week/release triggers): update `docs/harness/metrics.md` from Jira and GitHub:
+6. **Metrics** (for release and phase triggers): update `docs/harness/metrics.md` from Jira and GitHub:
    - stories done
    - first-pass review PASS rate
    - QA bounces

@@ -43,10 +43,10 @@
   },
   "project": {
     "timezone": "Asia/Colombo",
-    "kickoffDate": null,
     "uatBusinessDays": 20,
     "warrantyMonths": 6,
-    "changeRequestRateLkrPerDay": 18000
+    "changeRequestRateLkrPerDay": 18000,
+    "goLiveDate": null
   },
   "stack": {
     "decided": false,
