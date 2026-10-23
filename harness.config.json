@@ -1,0 +1,60 @@
+{
+  "$comment": "Single source of truth for harness integration settings. Fill TODO values during prerequisites; skills and hooks read this file.",
+  "jira": {
+    "site": "johashdev.atlassian.net",
+    "cloudId": "c55d3df8-fca2-4ed0-baea-dca60932f6aa",
+    "projectKey": "KAN",
+    "boardId": 2,
+    "fixVersions": {
+      "mvp": "1.0.0",
+      "warranty": "1.0.x"
+    },
+    "statuses": [
+      "To Do",
+      "Ready",
+      "In Progress",
+      "In Review",
+      "Ready for QA",
+      "In QA",
+      "Ready for UAT",
+      "In UAT",
+      "Ready for Prod",
+      "Done",
+      "Blocked"
+    ]
+  },
+  "github": {
+    "repo": "johash-dev/assidua-ops",
+    "defaultBranch": "main",
+    "environments": {
+      "qa": {
+        "url": null,
+        "approval": false
+      },
+      "staging": {
+        "url": null,
+        "approval": true
+      },
+      "production": {
+        "url": null,
+        "approval": true
+      }
+    }
+  },
+  "project": {
+    "timezone": "Asia/Colombo",
+    "kickoffDate": null,
+    "uatBusinessDays": 20,
+    "warrantyMonths": 6,
+    "changeRequestRateLkrPerDay": 18000
+  },
+  "stack": {
+    "decided": false,
+    "adr": null
+  },
+  "hosting": {
+    "decided": false,
+    "adr": null,
+    "deployScript": null
+  }
+}

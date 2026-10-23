@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Bash(bash scripts/verify.sh:*)",
+      "Bash(bash scripts/e2e.sh:*)",
+      "Bash(node scripts/harness/:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git branch:*)",
+      "Bash(git switch:*)",
+      "Bash(git checkout -b:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git fetch:*)",
+      "Bash(git push -u origin KAN-:*)",
+      "Bash(gh pr view:*)",
+      "Bash(gh pr list:*)",
+      "Bash(gh pr checks:*)",
+      "Bash(gh pr diff:*)",
+      "Bash(gh pr create:*)",
+      "Bash(gh run list:*)",
+      "Bash(gh run view:*)",
+      "Bash(gh run watch:*)",
+      "Bash(gh release view:*)",
+      "Bash(gh release list:*)",
+      "mcp__atlassian__getAccessibleAtlassianResources",
+      "mcp__atlassian__getVisibleJiraProjects",
+      "mcp__atlassian__getJiraIssue",
+      "mcp__atlassian__searchJiraIssuesUsingJql",
+      "mcp__atlassian__getTransitionsForJiraIssue",
+      "mcp__atlassian__getJiraProjectIssueTypesMetadata",
+      "mcp__atlassian__lookupJiraAccountId",
+      "mcp__atlassian__getJiraIssueRemoteIssueLinks",
+      "mcp__atlassian__atlassianUserInfo",
+      "mcp__a54d65ce-8667-4338-aa0b-ec75c222e5d8__getAccessibleAtlassianResources",
+      "mcp__a54d65ce-8667-4338-aa0b-ec75c222e5d8__atlassianUserInfo",
+      "mcp__a54d65ce-8667-4338-aa0b-ec75c222e5d8__discover",
+      "mcp__a54d65ce-8667-4338-aa0b-ec75c222e5d8__executeRead",
+      "mcp__a54d65ce-8667-4338-aa0b-ec75c222e5d8__search",
+      "mcp__a54d65ce-8667-4338-aa0b-ec75c222e5d8__getJiraIssue",
+      "mcp__a54d65ce-8667-4338-aa0b-ec75c222e5d8__searchJiraIssuesUsingJql"
+    ],
+    "ask": [
+      "Bash(gh pr merge:*)",
+      "Bash(gh workflow run:*)",
+      "Bash(gh release create:*)",
+      "Bash(git tag:*)",
+      "Bash(git push --tags:*)",
+      "Bash(git push origin v:*)",
+      "Bash(gh api:*)",
+      "Bash(node scripts/harness/jira-bootstrap.mjs:*)",
+      "Bash(node scripts/harness/github-bootstrap.mjs:*)",
+      "Bash(node scripts/harness/approve-deployment.mjs:*)",
+      "Bash(node scripts/harness/preflight.mjs:*)",
+      "mcp__atlassian__createJiraIssue",
+      "mcp__atlassian__editJiraIssue",
+      "mcp__atlassian__transitionJiraIssue",
+      "mcp__a54d65ce-8667-4338-aa0b-ec75c222e5d8__executeWrite",
+      "mcp__a54d65ce-8667-4338-aa0b-ec75c222e5d8__createJiraIssue",
+      "mcp__a54d65ce-8667-4338-aa0b-ec75c222e5d8__editJiraIssue",
+      "mcp__a54d65ce-8667-4338-aa0b-ec75c222e5d8__transitionJiraIssue",
+      "mcp__a54d65ce-8667-4338-aa0b-ec75c222e5d8__addOrEditJiraIssueComment"
+    ],
+    "deny": [
+      "Bash(git push --force:*)",
+      "Bash(git push -f:*)",
+      "Bash(git push origin main:*)",
+      "Bash(git push origin master:*)",
+      "Bash(gh repo delete:*)",
+      "Bash(gh secret delete:*)",
+      "Bash(gh secret set:*)",
+      "Bash(dropdb:*)",
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(./**/secrets/**)",
+      "mcp__a54d65ce-8667-4338-aa0b-ec75c222e5d8__executeDestructive",
+      "mcp__atlassian__executeDestructive"
+    ]
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/session-start.mjs\""
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/guard-bash.mjs\""
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/guard-edit.mjs\""
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/format-file.mjs\""
+          }
+        ]
+      }
+    ]
+  }
+}

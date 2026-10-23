@@ -1,0 +1,30 @@
+name: deploy-prod
+on:
+  release:
+    types: [published]
+permissions:
+  contents: read
+concurrency:
+  group: deploy-prod
+  cancel-in-progress: false
+jobs:
+  deploy:
+    # Production tags only (vX.Y.Z, never -rc).
+    if: ${{ !contains(github.event.release.tag_name, '-') }}
+    runs-on: ubuntu-latest
+    environment:
+      name: production   # required reviewer; approved from /release-prod after pre-flight
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Verify
+        run: bash scripts/verify.sh
+      - name: Deploy (script takes a pre-deploy DB snapshot)
+        run: |
+          script=$(node -p "require('./harness.config.json').hosting.deployScript || ''")
+          if [ -z "$script" ]; then echo "::error::Hosting not decided (ADR-002)."; exit 1; fi
+          bash "$script" production "${{ github.event.release.tag_name }}"

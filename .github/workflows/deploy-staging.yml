@@ -1,0 +1,26 @@
+name: deploy-staging
+on:
+  push:
+    tags: ['v*.*.*-rc.*']
+permissions:
+  contents: read
+concurrency:
+  group: deploy-staging
+  cancel-in-progress: false
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: staging   # required reviewer; approved from /release-uat
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Verify
+        run: bash scripts/verify.sh
+      - name: Deploy
+        run: |
+          script=$(node -p "require('./harness.config.json').hosting.deployScript || ''")
+          if [ -z "$script" ]; then echo "::error::Hosting not decided (ADR-002)."; exit 1; fi
+          bash "$script" staging "$GITHUB_REF_NAME"

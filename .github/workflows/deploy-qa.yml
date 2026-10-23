@@ -1,0 +1,29 @@
+name: deploy-qa
+on:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+concurrency:
+  group: deploy-qa
+  cancel-in-progress: false
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: qa
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Deploy
+        run: |
+          script=$(node -p "require('./harness.config.json').hosting.deployScript || ''")
+          if [ -z "$script" ]; then echo "::warning::Hosting not decided (ADR-002); skipping deploy."; exit 0; fi
+          bash "$script" qa "$GITHUB_SHA"
+      - name: Smoke test
+        run: |
+          url=$(node -p "require('./harness.config.json').github.environments.qa.url || ''")
+          if [ -z "$url" ]; then echo "::warning::No QA URL configured; smoke skipped."; exit 0; fi
+          bash scripts/e2e.sh "$url" --grep @smoke
