@@ -27,8 +27,8 @@ Render it compactly:
 ```
 ## Today — <date> · Week n of 4 | UAT day n/20 | Warranty month n/6
 🔥 Fires: …            (omit if none)
-▶ In flight: KAN-12 (In Progress, branch, CI ✓/✗)
-📋 Up next: KAN-14, KAN-15, KAN-17
+▶ In flight: AO-12 (In Progress, branch, CI ✓/✗)
+📋 Up next: AO-14, AO-15, AO-17
 🧪 QA/UAT: …
 🌐 Envs: qa vX @sha · staging vY · prod vZ
 ⚠ Setup gaps: …         (TODO config, stack/hosting ADRs pending)

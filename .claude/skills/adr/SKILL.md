@@ -40,6 +40,6 @@ Follow `docs/harness/skill-conventions.md`.
      - `scripts/deploy/<target>.sh`
      - environment URLs in the config
      - GitHub environments via `node scripts/harness/github-bootstrap.mjs`
-6. Work on a branch `KAN-<task>-adr-<slug>` and ship the ADR through `/review` → `/ship` like any change.
+6. Work on a branch `AO-<task>-adr-<slug>` and ship the ADR through `/review` → `/ship` like any change.
 
 End with the evidence report and **Next →**.

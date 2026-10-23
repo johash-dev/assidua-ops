@@ -62,12 +62,12 @@ for (const f of mdFiles) {
 }
 
 // Guard hook behaviour (deterministic safety cases)
-const noPreflight = { branch: "KAN-1-x", preflight: () => false };
-const withPreflight = { branch: "KAN-1-x", preflight: () => true };
+const noPreflight = { branch: "AO-1-x", preflight: () => false };
+const withPreflight = { branch: "AO-1-x", preflight: () => true };
 const cases = [
   ["git push origin main", noPreflight, true],
-  ["git push --force origin KAN-1-x", noPreflight, true],
-  ["git push -u origin KAN-1-x", noPreflight, false],
+  ["git push --force origin AO-1-x", noPreflight, true],
+  ["git push -u origin AO-1-x", noPreflight, false],
   ["git push", { branch: "main", preflight: () => false }, true],
   ["git tag v1.0.0", noPreflight, true],
   ["git tag v1.0.0", withPreflight, false],

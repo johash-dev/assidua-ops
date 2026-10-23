@@ -15,7 +15,7 @@ Set `github.repo` in `harness.config.json`, and replace the owner in `.github/CO
 ## 2. Jira (Atlassian Remote MCP)
 `.mcp.json` registers `https://mcp.atlassian.com/v1/mcp`. On first use, Claude Code opens the Atlassian OAuth consent in your browser; approve it for the Jira site. Then ask Claude for the `cloudId` (`getAccessibleAtlassianResources`), and set `jira.site`, `jira.cloudId` and `jira.boardId` in `harness.config.json`.
 
-You create the Jira project (Scrum, key `KAN`, already exists as "Assidua Ops") once, or ask Claude to try it via MCP.
+You create the Jira project (Scrum, key `AO`, already exists as "Assidua Ops") once, or ask Claude to try it via MCP.
 
 ## 3. Jira REST token (only for bootstrap + pre-flight)
 Create an API token at id.atlassian.com → Security. Keep it in your user environment, **never in the repo**:

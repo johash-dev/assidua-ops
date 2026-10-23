@@ -1,7 +1,7 @@
 ---
 name: qa
 description: Verify merged stories on the deployed QA environment using the qa-tester subagent (AC-derived e2e plus exploratory negative paths), record results in Jira, and move passing stories to Ready for UAT or bounce failures with linked Bugs.
-argument-hint: [KAN-key | sprint] (default: all stories in Ready for QA)
+argument-hint: [AO-key | sprint] (default: all stories in Ready for QA)
 ---
 
 Follow `docs/harness/skill-conventions.md`.
@@ -13,6 +13,6 @@ Follow `docs/harness/skill-conventions.md`.
 5. **Per story:**
    - **PASS**: comment with the evidence (SHA, specs, results), then transition to `Ready for UAT`.
    - **FAIL**: ⛔ gate with the proposed Bug(s). On approval, create each Bug (template in `jira-model.md`, linked to the story, `scope:approved`), transition the story back to `In Progress`, and comment.
-6. If new e2e specs were written, commit them on a branch `KAN-<n>-e2e` and route them through `/review` → `/ship` (they are code too).
+6. If new e2e specs were written, commit them on a branch `AO-<n>-e2e` and route them through `/review` → `/ship` (they are code too).
 
 End with the evidence report. **Next →** per `next-step.md`: either the next Ready story, `/build` for a bounced story, or `/release-uat` once every fixVersion story is Ready for UAT.

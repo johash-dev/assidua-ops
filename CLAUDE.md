@@ -34,7 +34,7 @@ Fixed by the proposal: a staff web app, access-controlled technician link pages,
 ## Conventions
 
 - Jira project key and repo: [harness.config.json](harness.config.json).
-- Branch `KAN-123-short-slug`, commits `KAN-123 <imperative summary>`, PR title `KAN-123: <summary>`.
+- Branch `AO-123-short-slug`, commits `AO-123 <imperative summary>`, PR title `AO-123: <summary>`.
 - Story format, Jira statuses and labels: [docs/harness/jira-model.md](docs/harness/jira-model.md).
 - Quality bar: [docs/quality/checklist.md](docs/quality/checklist.md). UI rules: [docs/ui/design-system.md](docs/ui/design-system.md).
 - Domain terms and roles: [docs/product/glossary.md](docs/product/glossary.md), [docs/product/roles-and-permissions.md](docs/product/roles-and-permissions.md), [docs/product/business-rules.md](docs/product/business-rules.md).

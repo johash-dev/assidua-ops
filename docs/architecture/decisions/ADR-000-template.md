@@ -1,7 +1,7 @@
 # ADR-NNN: <title>
 
 - **Status:** Proposed | Accepted | Superseded by ADR-x
-- **Date:** YYYY-MM-DD   **Jira:** KAN-n
+- **Date:** YYYY-MM-DD   **Jira:** AO-n
 
 ## Context
 What forces the decision. Cite scope § and constraints.

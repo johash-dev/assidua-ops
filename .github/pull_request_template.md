@@ -1,6 +1,6 @@
-## KAN-<n>: <summary>
+## AO-<n>: <summary>
 
-**Jira:** https://<site>/browse/KAN-<n>  ·  **Scope ref:** §3.x
+**Jira:** https://<site>/browse/AO-<n>  ·  **Scope ref:** §3.x
 
 ### Acceptance criteria → evidence
 - [ ] AC1 — proven by `<test path>`

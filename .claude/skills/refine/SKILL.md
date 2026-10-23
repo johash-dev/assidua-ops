@@ -1,7 +1,7 @@
 ---
 name: refine
 description: Tighten one Jira story until it meets the Definition of Ready — missing acceptance criteria, negative/permission cases, edge cases, audit events, UI states, open decisions. Use before /start when a story is vague or labelled needs-decision.
-argument-hint: <KAN-key>
+argument-hint: <AO-key>
 ---
 
 Follow `docs/harness/skill-conventions.md`.

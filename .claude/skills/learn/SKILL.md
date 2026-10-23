@@ -1,7 +1,7 @@
 ---
 name: learn
 description: Turn a failure, bounce, defect or release into durable improvement at the right layer (regression test, business rule, doc, skill, hook, script) and update harness metrics. Use after a QA/UAT bounce, a review BLOCK, a hotfix, a wrong Next → routing, or at the end of each week/release.
-argument-hint: <KAN-key | release-vX.Y.Z | week-N | free text>
+argument-hint: <AO-key | release-vX.Y.Z | week-N | free text>
 ---
 
 Follow `docs/harness/skill-conventions.md`.

@@ -62,7 +62,7 @@ To Do → Ready → In Progress → In Review → Ready for QA → In QA → Rea
 **Environment:** qa | staging | production   **Version:** x.y.z
 **Steps to reproduce** / **Expected** / **Actual** / **Evidence**
 **Classification:** defect | non-blocking (§7.4 reason) | CR
-**Priority (§8):** Critical | High | Medium | Low  **Linked story:** KAN-n
+**Priority (§8):** Critical | High | Medium | Low  **Linked story:** AO-n
 ```
 
 ## Versions and sprints

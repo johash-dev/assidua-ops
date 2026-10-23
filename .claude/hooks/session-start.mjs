@@ -3,7 +3,7 @@ import { currentBranch, readConfig } from "./lib.mjs";
 
 const lines = [];
 const branch = currentBranch();
-const key = branch?.match(/^(?:hotfix\/)?(KAN-\d+)/)?.[1];
+const key = branch?.match(/^(?:hotfix\/)?(AO-\d+)/)?.[1];
 lines.push(`Harness: branch=${branch ?? "none"}${key ? ` story=${key}` : ""}`);
 
 const cfg = readConfig();

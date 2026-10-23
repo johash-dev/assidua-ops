@@ -1,7 +1,7 @@
 ---
 name: scope-check
 description: Classify a request (client email, meeting ask, idea, bug report) against the Approved Scope as in-scope, defect, non-blocking/cosmetic, or Change Request; draft a CR with a day estimate when out of scope. Use whenever new work appears that isn't already a Ready Jira story.
-argument-hint: <request text or KAN-key>
+argument-hint: <request text or AO-key>
 ---
 
 Follow `docs/harness/skill-conventions.md`.

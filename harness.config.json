@@ -3,7 +3,7 @@
   "jira": {
     "site": "johashdev.atlassian.net",
     "cloudId": "c55d3df8-fca2-4ed0-baea-dca60932f6aa",
-    "projectKey": "KAN",
+    "projectKey": "AO",
     "boardId": 2,
     "fixVersions": {
       "mvp": "1.0.0",
