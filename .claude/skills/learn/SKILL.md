@@ -29,7 +29,7 @@ Follow `docs/harness/skill-conventions.md`.
    - stories done
    - first-pass review PASS rate
    - QA bounces
-   - UAT defects by priority
+   - UAT defects by priority, and all defects by `area:` label (where they cluster)
    - median Ready→Done
    - unrelated-change findings
 

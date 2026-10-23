@@ -1,5 +1,5 @@
-// One-time Jira project setup through the REST API (components, versions, status check). The harness
-// uses no sprints. Dry-run by default; pass --apply to make changes.
+// One-time Jira project setup through the REST API (versions, status check). The harness uses no
+// sprints, and areas are `area:` labels (no setup needed). Dry-run by default; pass --apply to make changes.
 //   JIRA_EMAIL=… JIRA_API_TOKEN=… node scripts/harness/jira-bootstrap.mjs [--apply]
 // Workflow transitions between statuses are reported, not edited: if statuses are missing from the
 // project's workflow, the script prints exactly what to add (one admin step).
@@ -11,7 +11,6 @@ const cfg = loadConfig();
 const key = requireConfigured(cfg.jira.projectKey, "jira.projectKey");
 requireConfigured(cfg.jira.site, "jira.site");
 
-const COMPONENTS = ["customers", "staff-access", "inquiries-jobs", "technicians", "deadlines-notifications", "attachments", "reporting", "audit", "handover", "platform"];
 const VERSIONS = [cfg.jira.fixVersions.mvp];
 const plan = [];
 const act = async (desc, fn) => {
@@ -21,11 +20,6 @@ const act = async (desc, fn) => {
 
 const project = await jira("GET", `/rest/api/3/project/${key}`);
 console.log(`Project ${project.key} — ${project.name} (${project.style ?? "classic"})`);
-
-const existingComponents = new Set((await jira("GET", `/rest/api/3/project/${key}/components`)).map((c) => c.name));
-for (const name of COMPONENTS.filter((c) => !existingComponents.has(c))) {
-  await act(`create component ${name}`, () => jira("POST", "/rest/api/3/component", { project: key, name }));
-}
 
 const existingVersions = new Set((await jira("GET", `/rest/api/3/project/${key}/versions`)).map((v) => v.name));
 for (const name of VERSIONS.filter((v) => !existingVersions.has(v))) {

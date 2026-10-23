@@ -23,10 +23,10 @@ Follow `docs/harness/skill-conventions.md` and `docs/harness/jira-model.md`.
    - every bullet of the source § is covered by some story
    - nothing beyond the § was added
    - any open role/permission question is marked `needs-decision` and listed
-5. ⛔ Gate. Show a table: title, component, labels, build phase and rank order, plus the full text of each story. Options: Approve all / Edit some / Stop.
+5. ⛔ Gate. Show a table: title, `area:` label(s), other labels, build phase and rank order, plus the full text of each story. Options: Approve all / Edit some / Stop.
 6. **On approval**, create the items in Jira:
    - the epic, if missing
-   - the stories, linked to the epic, with components, labels (`scope:approved` | `scope:cr`), fixVersion `1.0.0`, ranked in dependency order (build phases in `approved-scope.md`). Never assign sprints or dates.
+   - the stories, linked to the epic, with labels (an `area:` label from `harness.config.json` → `jira.areas`, plus `scope:approved` | `scope:cr`), fixVersion `1.0.0`, ranked in dependency order (build phases in `approved-scope.md`). Never assign sprints or dates.
    - stories meeting the Definition of Ready are transitioned to `Ready`
    - `needs-decision` stories stay in `To Do`
 7. Record any decisions Johash made at the gate in `docs/product/roles-and-permissions.md` or `business-rules.md`.

@@ -9,6 +9,18 @@
       "mvp": "1.0.0",
       "warranty": "1.0.x"
     },
+    "areas": [
+      "area:customers",
+      "area:staff-access",
+      "area:inquiries-jobs",
+      "area:technicians",
+      "area:deadlines-notifications",
+      "area:attachments",
+      "area:reporting",
+      "area:audit",
+      "area:handover",
+      "area:platform"
+    ],
     "statuses": [
       "To Do",
       "Ready",

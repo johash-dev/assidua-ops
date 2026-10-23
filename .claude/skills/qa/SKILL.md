@@ -12,7 +12,7 @@ Follow `docs/harness/skill-conventions.md`.
 4. Launch the `qa-tester` subagent with the story keys, their AC and the base URL.
 5. **Per story:**
    - **PASS**: comment with the evidence (SHA, specs, results), then transition to `Ready for UAT`.
-   - **FAIL**: ⛔ gate with the proposed Bug(s). On approval, create each Bug (template in `jira-model.md`, linked to the story, `scope:approved`), transition the story back to `In Progress`, and comment.
+   - **FAIL**: ⛔ gate with the proposed Bug(s). On approval, create each Bug (template in `jira-model.md`, linked to the story, `scope:approved`, and the story's `area:` label), transition the story back to `In Progress`, and comment.
 6. If new e2e specs were written, commit them on a branch `AO-<n>-e2e` and route them through `/review` → `/ship` (they are code too).
 
 End with the evidence report. **Next →** per `next-step.md`: either the next Ready story, `/build` for a bounced story, or `/release-uat` once every fixVersion story is Ready for UAT.
