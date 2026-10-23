@@ -15,7 +15,7 @@ jobs:
     environment:
       name: production   # required reviewer; approved from /release-prod after pre-flight
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           ref: ${{ github.event.release.tag_name }}
       - uses: actions/setup-node@v7
