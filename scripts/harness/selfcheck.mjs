@@ -52,6 +52,16 @@ for (const f of scheduleFiles) {
   expect(!hit, `no delivery-schedule terms in ${f.slice(root.length + 1)}${hit ? ` (found "${hit[0]}")` : ""}`);
 }
 
+// Areas are `area:` labels, not Jira components (this space has no components)
+const areas = cfg?.jira?.areas ?? [];
+expect(areas.length === 10 && areas.every((a) => /^area:[a-z-]+$/.test(a)), "harness.config.json jira.areas has 10 area:<name> labels");
+const jiraModel = readFileSync(join(root, "docs", "harness", "jira-model.md"), "utf8");
+for (const a of areas) expect(jiraModel.includes(`\`${a}\``), `jira-model.md documents ${a}`);
+for (const f of [...EXPECTED_SKILLS.map((n) => join(skillsDir, n, "SKILL.md")), join(root, "docs", "harness", "jira-model.md")]) {
+  const hit = existsSync(f) && /\bjira components?\b|with components,|`?components`? field/i.test(readFileSync(f, "utf8").replace(/no Jira components/gi, ""));
+  expect(!hit, `no Jira component usage in ${f.slice(root.length + 1)}`);
+}
+
 // Agents
 for (const name of ["explorer", "reviewer", "ui-reviewer", "qa-tester"]) {
   const p = join(root, ".claude", "agents", `${name}.md`);

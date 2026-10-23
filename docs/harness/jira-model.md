@@ -8,12 +8,16 @@ Project key and site are in `harness.config.json`. The harness owns this structu
 - **Task** = non-user-facing work (ADR, CI, infra).
 - **Bug** = a defect. **Sub-task** is used only when a story genuinely needs a split PR. Prefer splitting the story instead.
 
-## Components
-`customers`, `staff-access`, `inquiries-jobs`, `technicians`, `deadlines-notifications`, `attachments`, `reporting`, `audit`, `handover`, `platform`
-
 ## Labels
-- Scope (exactly one): `scope:approved` | `scope:cr` | `warranty`
-- Flags: `ui`, `security`, `migration`, `needs-decision`
+This team-managed space has no Jira components, so the code area an issue touches is recorded as an `area:` label.
+
+| Kind | Values | Rule |
+|---|---|---|
+| Area | `area:customers` (§3.1), `area:staff-access` (§3.2), `area:inquiries-jobs` (§3.3), `area:technicians` (§3.4), `area:deadlines-notifications` (§3.5), `area:attachments` (§3.6), `area:reporting` (§3.7), `area:audit` (§3.8), `area:handover` (§3.9), `area:platform` (enabling work) | At least one on every Story, Task and Bug. Use more than one only when the change genuinely spans areas. The list lives in `harness.config.json` → `jira.areas`. Never invent a new area without updating that list. |
+| Scope | `scope:approved` \| `scope:cr` \| `warranty` | Exactly one |
+| Flags | `ui`, `security`, `migration`, `needs-decision` | As applicable |
+
+Filter by area with JQL `labels = "area:attachments"`. Labels are free text, so the harness must copy the exact spelling from the config.
 
 ## Workflow
 ```
@@ -63,6 +67,7 @@ To Do → Ready → In Progress → In Review → Ready for QA → In QA → Rea
 **Steps to reproduce** / **Expected** / **Actual** / **Evidence**
 **Classification:** defect | non-blocking (§7.4 reason) | CR
 **Priority (§8):** Critical | High | Medium | Low  **Linked story:** AO-n
+**Area label:** area:<name> (where the defect lives, not where it was noticed)
 ```
 
 ## Versions, ordering and priority
