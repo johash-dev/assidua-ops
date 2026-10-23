@@ -1,5 +1,5 @@
-// One-time Jira project setup through the REST API (things the Atlassian MCP can't do: components,
-// versions, statuses, sprints). Dry-run by default; pass --apply to make changes.
+// One-time Jira project setup through the REST API (components, versions, status check). The harness
+// uses no sprints. Dry-run by default; pass --apply to make changes.
 //   JIRA_EMAIL=… JIRA_API_TOKEN=… node scripts/harness/jira-bootstrap.mjs [--apply]
 // Workflow transitions between statuses are reported, not edited: if statuses are missing from the
 // project's workflow, the script prints exactly what to add (one admin step).
@@ -13,7 +13,6 @@ requireConfigured(cfg.jira.site, "jira.site");
 
 const COMPONENTS = ["customers", "staff-access", "inquiries-jobs", "technicians", "deadlines-notifications", "attachments", "reporting", "audit", "handover", "platform"];
 const VERSIONS = [cfg.jira.fixVersions.mvp];
-const SPRINTS = ["W1 Foundation", "W2 Core workflow", "W3 Operational", "W4 Launch readiness", "UAT", "Warranty"];
 const plan = [];
 const act = async (desc, fn) => {
   plan.push(desc);
@@ -36,16 +35,6 @@ for (const name of VERSIONS.filter((v) => !existingVersions.has(v))) {
 const statusesByType = await jira("GET", `/rest/api/3/project/${key}/statuses`);
 const storyStatuses = new Set((statusesByType.find((t) => t.name === "Story")?.statuses ?? []).map((s) => s.name));
 const missingStatuses = cfg.jira.statuses.filter((s) => !storyStatuses.has(s));
-
-if (cfg.jira.boardId) {
-  const sprints = await jira("GET", `/rest/agile/1.0/board/${cfg.jira.boardId}/sprint?maxResults=50`);
-  const existingSprints = new Set(sprints.values.map((s) => s.name));
-  for (const name of SPRINTS.filter((s) => !existingSprints.has(s))) {
-    await act(`create sprint ${name}`, () => jira("POST", "/rest/agile/1.0/sprint", { name, originBoardId: cfg.jira.boardId }));
-  }
-} else {
-  plan.push("skip sprints: set jira.boardId in harness.config.json");
-}
 
 console.log(`\n${apply ? "Applied" : "Dry run — would apply"}:`);
 for (const p of plan) console.log(`  • ${p}`);

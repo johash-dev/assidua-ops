@@ -4,7 +4,7 @@ Project key and site are in `harness.config.json`. The harness owns this structu
 
 ## Hierarchy
 - **Epic** = a capability package: Foundation, §3.1 … §3.9, Handover.
-- **Story** = one vertical slice, deliverable in ≤ 1 day, one PR.
+- **Story** = one vertical slice and one reviewable PR (aim for ≤ ~400 changed lines; split anything bigger).
 - **Task** = non-user-facing work (ADR, CI, infra).
 - **Bug** = a defect. **Sub-task** is used only when a story genuinely needs a split PR. Prefer splitting the story instead.
 
@@ -36,7 +36,7 @@ To Do → Ready → In Progress → In Review → Ready for QA → In QA → Rea
 - Acceptance criteria in Given/When/Then, including at least one negative/permission case.
 - Edge cases, non-goals, cited business rules (`BR-n`), the audit events it produces.
 - For `ui` stories: the screens and states (loading / empty / error / success / disabled).
-- Estimate ≤ 1 day.
+- Small enough for one reviewable PR. No time estimate is required.
 
 ## Definition of Done
 - AC are met, with evidence from `verify.sh` output.
@@ -65,7 +65,7 @@ To Do → Ready → In Progress → In Review → Ready for QA → In QA → Rea
 **Priority (§8):** Critical | High | Medium | Low  **Linked story:** AO-n
 ```
 
-## Versions and sprints
+## Versions, ordering and priority
 - Priority mapping (§8 → Jira defaults): Critical → Highest, High → High, Medium → Medium, Low → Low.
-- Fix versions: `1.0.0` (MVP), `1.0.x` (warranty patches).
-- Sprints: `W1 Foundation`, `W2 Core workflow`, `W3 Operational`, `W4 Launch readiness`, then `UAT`, then `Warranty`.
+- Fix versions: `1.0.0` (MVP), `1.0.x` (warranty patches). A version is a release milestone, not a date.
+- **No sprints and no delivery dates.** Work is pulled continuously: board rank (set by `/breakdown` in dependency order, following the build-order phases in `approved-scope.md`), then priority. The harness never assigns issues to sprints.

@@ -14,7 +14,7 @@ If nothing is actionable:
 ```
 
 ## How to decide (in order)
-1. **Live state, not memory.** Query Jira (my issues, the active sprint, versions) and GitHub (`gh pr list`, `gh run list`) before choosing.
+1. **Live state, not memory.** Query Jira (my issues, ranked Ready stories, versions) and GitHub (`gh pr list`, `gh run list`) before choosing.
 2. **Fire first:**
    - an open warranty **Critical/High** Bug → `/hotfix`
    - a red CI on my open PR → `/build <key>` to fix it
@@ -27,8 +27,8 @@ If nothing is actionable:
 | `/today` | Any of the "fire" items | that item |
 | `/today` | Story In Progress assigned to me | `/build <key>` (or `/review <key>` if the build is green and unreviewed) |
 | `/today` | No in-flight work, Ready stories exist | `/start <top Ready key>` |
-| `/today` | Sprint has To Do stories not Ready | `/refine <key>` |
-| `/today` | No stories for current week's epics | `/breakdown <epic/§>` |
+| `/today` | Top-ranked To Do stories not Ready | `/refine <key>` |
+| `/today` | No stories for the next build phase | `/breakdown <epic/§>` |
 | `/adr` | Stack ADR accepted | wire `verify.sh`/CI via `/build <ADR task key>`, then `/breakdown Foundation` |
 | `/breakdown` | Stories created | `/refine <first story lacking DoR>`, else `/start <top Ready>` |
 | `/refine` | Story now Ready | `/start <key>` |

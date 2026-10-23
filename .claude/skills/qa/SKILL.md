@@ -1,7 +1,7 @@
 ---
 name: qa
 description: Verify merged stories on the deployed QA environment using the qa-tester subagent (AC-derived e2e plus exploratory negative paths), record results in Jira, and move passing stories to Ready for UAT or bounce failures with linked Bugs.
-argument-hint: [AO-key | sprint] (default: all stories in Ready for QA)
+argument-hint: [AO-key] (default: all stories in Ready for QA)
 ---
 
 Follow `docs/harness/skill-conventions.md`.

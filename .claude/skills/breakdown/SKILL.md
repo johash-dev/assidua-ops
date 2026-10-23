@@ -9,8 +9,7 @@ Follow `docs/harness/skill-conventions.md` and `docs/harness/jira-model.md`.
 1. **Source**: read the target section of `docs/scope/approved-scope.md` (or the approved CR file), plus the business rules and roles it touches. Search Jira for existing epics and stories on it, so you don't create duplicates.
 2. **Slice vertically.** Each story should be:
    - one user-observable capability
-   - ≤ 1 day of work
-   - one PR
+   - one reviewable PR (≤ ~400 changed lines)
    - testable at a public boundary
 
    Order the stories by dependency (e.g. the data model + Admin CRUD before the flows that use it). Put enabling tech work in Tasks.
@@ -24,10 +23,10 @@ Follow `docs/harness/skill-conventions.md` and `docs/harness/jira-model.md`.
    - every bullet of the source § is covered by some story
    - nothing beyond the § was added
    - any open role/permission question is marked `needs-decision` and listed
-5. ⛔ Gate. Show a table: title, component, labels, estimate, sprint (W1–W4 per §2), plus the full text of each story. Options: Approve all / Edit some / Stop.
+5. ⛔ Gate. Show a table: title, component, labels, build phase and rank order, plus the full text of each story. Options: Approve all / Edit some / Stop.
 6. **On approval**, create the items in Jira:
    - the epic, if missing
-   - the stories, linked to the epic, with components, labels (`scope:approved` | `scope:cr`), fixVersion `1.0.0` and the sprint
+   - the stories, linked to the epic, with components, labels (`scope:approved` | `scope:cr`), fixVersion `1.0.0`, ranked in dependency order (build phases in `approved-scope.md`). Never assign sprints or dates.
    - stories meeting the Definition of Ready are transitioned to `Ready`
    - `needs-decision` stories stay in `To Do`
 7. Record any decisions Johash made at the gate in `docs/product/roles-and-permissions.md` or `business-rules.md`.

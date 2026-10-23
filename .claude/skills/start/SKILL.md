@@ -20,7 +20,7 @@ Follow `docs/harness/skill-conventions.md`.
    - **Migrations / data impact**, with a rollback.
    - **Risks and unknowns**, and how you'll resolve each.
    - **Out of scope** for this PR.
-   - **Size check**: if the plan exceeds ~1 day or ~400 changed lines, propose splitting the story instead.
+   - **Size check**: if the plan exceeds ~400 changed lines or mixes unrelated concerns, propose splitting the story instead.
 5. ⛔ Gate: Approve / Change / Split story / Stop.
 6. On approval: post the plan as a Jira comment, and save it to `.claude/state/plan-AO-<n>.md` so `/build` and `/review` can read it.
 

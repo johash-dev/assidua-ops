@@ -1,6 +1,6 @@
 # Assidua Ops
 
-Shared operational system for Assidua Technologies (Rivon, Rover, Assidua): customer inquiries → department-owned jobs → technician WhatsApp links → deadlines, reports, audit history. Fixed-scope MVP (proposal v1.4): 4-week build, 20-business-day client UAT, 6-month warranty.
+Shared operational system for Assidua Technologies (Rivon, Rover, Assidua): customer inquiries → department-owned jobs → technician WhatsApp links → deadlines, reports, audit history. Fixed-scope MVP (proposal v1.4). The harness tracks no build schedule: work flows by dependency and priority. The only clocks are the client's: 20-business-day UAT and 6-month warranty.
 
 ## Ground rules
 

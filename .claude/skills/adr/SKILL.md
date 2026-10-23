@@ -6,7 +6,7 @@ argument-hint: <topic, e.g. "stack" | "hosting" | free text>
 
 Follow `docs/harness/skill-conventions.md`.
 
-1. **Context**: collect the constraints from the proposal: §12 technology, §4 exclusions (no HA), §3.5 scheduled jobs, §3.6 file storage, §9 backups, §10.5 accounts in the Company's name, Year-1 cost ranges (§6.3), a 4-week solo build, and a 6-month warranty by one developer.
+1. **Context**: collect the constraints from the proposal: §12 technology, §4 exclusions (no HA), §3.5 scheduled jobs, §3.6 file storage, §9 backups, §10.5 accounts in the Company's name, Year-1 cost ranges (§6.3), a solo AI-assisted build, and a 6-month warranty by one developer.
 2. **Options**: 2–3 realistic options in the ADR table (`docs/architecture/decisions/ADR-000-template.md`).
    - For **stack**, weigh:
      - type safety end-to-end

@@ -44,6 +44,14 @@ for (const name of EXPECTED_SKILLS) {
 const routing = readFileSync(join(root, "docs", "harness", "next-step.md"), "utf8");
 for (const name of EXPECTED_SKILLS) expect(routing.includes(`/${name}`), `next-step.md routes /${name}`);
 
+// No build-schedule assumptions (client UAT/warranty clocks are contractual and allowed)
+const SCHEDULE_TERMS = /\b(W[1-4]\b|Week [1-4n]|kickoff|4-week|sprint \(W|≤ 1 day)/i;
+const scheduleFiles = [...EXPECTED_SKILLS.map((n) => join(skillsDir, n, "SKILL.md")), ...["jira-model.md", "next-step.md", "skill-conventions.md"].map((f) => join(root, "docs", "harness", f))];
+for (const f of scheduleFiles) {
+  const hit = existsSync(f) && readFileSync(f, "utf8").match(SCHEDULE_TERMS);
+  expect(!hit, `no delivery-schedule terms in ${f.slice(root.length + 1)}${hit ? ` (found "${hit[0]}")` : ""}`);
+}
+
 // Agents
 for (const name of ["explorer", "reviewer", "ui-reviewer", "qa-tester"]) {
   const p = join(root, ".claude", "agents", `${name}.md`);
