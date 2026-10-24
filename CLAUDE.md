@@ -16,7 +16,7 @@ Shared operational system for Assidua Technologies (Rivon, Rover, Assidua): cust
 
 **Stack decided ([ADR-001](docs/architecture/decisions/ADR-001-stack.md)):** TypeScript monolith on Node.js 24: Next.js 16, Drizzle, PostgreSQL 18, Better Auth, pg-boss (cron in Asia/Colombo), Zod, Vitest, Playwright + axe-core, Tailwind + shadcn/ui.
 **Zero-cost development:** no paid services, licences or secrets for local, test or CI runs. SMS, email and file storage use fakes or local stand-ins outside staging and production.
-**Hosting undecided:** ADR-002 is pending under [docs/architecture/decisions/](docs/architecture/decisions/). The app is not scaffolded until AO-4 lands, so `scripts/verify.sh` still reports app checks as not configured.
+**Hosting undecided:** ADR-002 is pending under [docs/architecture/decisions/](docs/architecture/decisions/). The app is scaffolded (AO-4); `scripts/verify.sh` fails if any app check is missing or red.
 Fixed by the proposal: a staff web app, access-controlled technician link pages, a secure API, PostgreSQL, and Asia/Colombo.
 
 ## Commands
