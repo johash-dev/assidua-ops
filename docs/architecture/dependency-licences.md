@@ -38,10 +38,10 @@ Transitive tree of `better-auth` + `pg-boss` + `pg` (the spike install, 45 packa
 |---|---|---|
 | PostgreSQL 18 | PostgreSQL Licence (permissive) | Image `postgres:18.3` ran in the spike. Licence from the project's published terms, **not re-checked in this spike**. |
 | Node.js 24 | MIT | Same: published terms, not re-checked. |
-| Mailpit | MIT | Same: published terms, not re-checked. Not run in this spike. |
+| Mailpit | MIT | Image `axllent/mailpit:v1.29.1` ran in AO-7 (`docker compose up`). Licence from the project's published terms, not re-checked. |
 
 ## Findings
 - **No paid or incompatible licence.** All direct dependencies are free to use, including for the client's production deployment.
 - **MPL-2.0 (`@axe-core/playwright`)** is file-level copyleft. It applies only if we modify its own files and redistribute them. It is a dev-only test dependency, is not shipped to users, and is used unmodified. No action needed. Record it here so the handover licence list is complete.
 - **Apache-2.0** packages (typescript, drizzle-orm, @playwright/test) need their NOTICE text kept if redistributed. We do not redistribute them.
-- Re-run the lookup when AO-4 pins the exact versions.
+- Re-run the lookup when AO-4 pins the exact versions. AO-7 pinned `@playwright/test` 1.64.1 (Apache-2.0) and `@axe-core/playwright` 4.14.0 (MPL-2.0); both re-confirmed with `npm view` on 2026-10-24.
