@@ -12,14 +12,29 @@ jobs:
   verify:
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    # Add a postgres service here when ADR-001 wires integration tests.
+    services:
+      postgres:
+        image: postgres:18.3
+        env:
+          POSTGRES_PASSWORD: postgres # throwaway CI database, not a secret
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgres
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
         with:
-          node-version: 22
+          node-version: 24
       - name: verify.sh (format, lint, types, tests, build)
         run: bash scripts/verify.sh
+      - name: verify.sh fails when it should
+        run: bash scripts/harness/verify-negative.sh
   dependency-review:
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
@@ -40,5 +55,5 @@ jobs:
       - uses: actions/checkout@v7
       - uses: github/codeql-action/init@v3
         with:
-          languages: javascript-typescript # adjust after ADR-001
+          languages: javascript-typescript
       - uses: github/codeql-action/analyze@v3
