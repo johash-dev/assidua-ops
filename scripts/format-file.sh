@@ -10,5 +10,6 @@ case "$file" in
   *) echo "format-file: unsupported file type: $file" >&2; exit 1 ;;
 esac
 
+file="$(cd "$(dirname "$file")" && pwd)/$(basename "$file")"
 cd "$(dirname "$0")/.."
 npx --no-install prettier --write "$file"

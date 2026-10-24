@@ -79,6 +79,13 @@ else
   grep -q "no such file" "$tmp/err" && pass "missing file → non-zero with message" || bad "missing file: no message"
 fi
 
+printf 'export const   y = {b:2}\n' > src/__neg_rel.ts
+if (cd src && bash ../scripts/format-file.sh __neg_rel.ts >/dev/null 2>&1) && [[ "$(cat src/__neg_rel.ts)" == "export const y = { b: 2 };" ]]; then
+  pass "formats a file given a path relative to a subdirectory"
+else
+  bad "did not format a file given a path relative to a subdirectory"
+fi
+
 printf 'x' > src/__neg_image.png
 if bash scripts/format-file.sh src/__neg_image.png 2>"$tmp/err"; then
   bad "unsupported file exited 0"
