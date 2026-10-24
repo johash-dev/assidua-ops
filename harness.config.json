@@ -65,8 +65,8 @@
     "adr": "ADR-001"
   },
   "hosting": {
-    "decided": false,
-    "adr": null,
+    "decided": true,
+    "adr": "ADR-002",
     "deployScript": null
   }
 }

@@ -1,6 +1,6 @@
 # Architecture
 
-> Stack: [ADR-001](decisions/ADR-001-stack.md), accepted. Hosting: ADR-002, pending. Update this file when it is accepted.
+> Stack: [ADR-001](decisions/ADR-001-stack.md), accepted. Hosting: [ADR-002](decisions/ADR-002-hosting.md), accepted.
 
 ## Stack (ADR-001)
 | Layer | Choice |
@@ -13,6 +13,15 @@
 | Tests | Vitest (unit, integration on real PostgreSQL); Playwright + axe-core (e2e) |
 
 Development is zero-cost: local Docker PostgreSQL, Mailpit for email, a fake SMS adapter, local-disk files, and `wa.me` links for WhatsApp.
+
+## Hosting (ADR-002)
+| Concern | Choice |
+|---|---|
+| App | Render web service, Singapore, Docker image, one instance per environment (pg-boss in the same process) |
+| Database | Render Postgres 18, same region. PITR plus a nightly `pg_dump` kept 14 days |
+| Files | Render persistent disk behind the storage adapter |
+| Email / SMS | EmailJS / Notify.lk, each behind an adapter with a fake for dev, test and CI |
+| Environments | QA when the first `/qa` is due, staging at the first rc tag, production at release |
 
 ## Fixed constraints (proposal §12)
 - Staff web application, plus access-controlled technician link pages.
