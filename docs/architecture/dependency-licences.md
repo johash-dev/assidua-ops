@@ -10,7 +10,9 @@ Cost rule: initial development must have no paid services or licences ([ADR-001]
 |---|---|---|---|
 | next | 16.4.3 | MIT | Framework |
 | react, react-dom | 19.3.1 | MIT | UI |
-| typescript | 7.0.2 | Apache-2.0 | Language |
+| typescript | 6.0.3 | Apache-2.0 | Language (7.x not used: typescript-eslint 8.72.0 peers `<6.1.0`) |
+| typescript-eslint, @eslint/js, @types/pg, @types/react, @types/react-dom | see lockfile | MIT | Lint and type packages (dev) |
+| @img/sharp-libvips-* (optional, via Next) | see lockfile | LGPL-3.0 | Image optimisation, optional; some transitive packages are MPL-2.0 |
 | drizzle-orm | 0.45.4 | Apache-2.0 | ORM |
 | drizzle-kit | 0.31.11 | MIT | Migrations (dev) |
 | pg | 8.23.1 | MIT | Postgres driver |

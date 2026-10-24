@@ -14,13 +14,21 @@ tmp=$(mktemp -d)
 cleanup() { rm -rf "$tmp" "$root"/src/__neg_*; }
 trap cleanup EXIT
 
-# expect_verify_fails <label> <expected last step> [dir]
+# expect_verify_fails <label> <expected> [dir]
+# <expected> starting with "msg:" must appear in the output (failure before any step
+# runs); otherwise it is the step that must be the last one started.
 expect_verify_fails() {
-  local label=$1 step=$2 dir=${3:-$root} out code last
+  local label=$1 expected=$2 dir=${3:-$root} out code last step ok=0
+  step=${expected#msg:}
   out=$(cd "$dir" && bash scripts/verify.sh 2>&1)
   code=$?
   last=$(printf '%s\n' "$out" | grep '^▶' | tail -n 1)
-  if [[ $code -ne 0 && "$last$out" == *"$step"* ]]; then
+  if [[ $expected == msg:* ]]; then
+    [[ $out == *"$step"* ]] && ok=1
+  else
+    [[ $last == "▶ $step"* ]] && ok=1
+  fi
+  if [[ $code -ne 0 && $ok -eq 1 ]]; then
     pass "$label → exit $code at '$step'"
   else
     bad "$label (exit $code, last step: ${last:-none})"
@@ -33,13 +41,13 @@ echo "verify.sh must fail:"
 mkdir "$tmp/copy"
 tar --exclude=node_modules --exclude=.git --exclude=.next -cf - . | tar -xf - -C "$tmp/copy"
 rm "$tmp/copy/package.json"
-expect_verify_fails "no package.json" "package.json is missing" "$tmp/copy"
+expect_verify_fails "no package.json" "msg:package.json is missing" "$tmp/copy"
 
 cp "$root/package.json" "$tmp/copy/package.json"
 (cd "$tmp/copy" && node -e "
 const fs=require('fs');const p=JSON.parse(fs.readFileSync('package.json','utf8'));
 delete p.scripts.typecheck;fs.writeFileSync('package.json',JSON.stringify(p));")
-expect_verify_fails "unconfigured step (no typecheck script)" "no 'typecheck' script" "$tmp/copy"
+expect_verify_fails "unconfigured step (no typecheck script)" "msg:no 'typecheck' script" "$tmp/copy"
 
 printf 'export const   badlyFormatted = {a:1}\n' > src/__neg_format.ts
 expect_verify_fails "unformatted file" "format check"
