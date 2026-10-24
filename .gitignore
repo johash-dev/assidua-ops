@@ -5,3 +5,8 @@
 .claude/settings.local.json
 .artifacts/
 node_modules/
+.next/
+coverage/
+dist/
+next-env.d.ts
+*.tsbuildinfo

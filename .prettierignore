@@ -1,0 +1,17 @@
+# Generated / dependencies
+node_modules
+.next
+coverage
+.artifacts
+.claude/state
+package-lock.json
+drizzle/meta
+
+# Harness, docs and CI config are not application code (not reformatted by AO-4)
+.claude
+.github
+docs
+scripts/harness
+scripts/deploy
+CLAUDE.md
+harness.config.json
