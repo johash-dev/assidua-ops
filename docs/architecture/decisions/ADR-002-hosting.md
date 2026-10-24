@@ -40,14 +40,14 @@ Option A, with environments created only when their gate needs them. Billing is 
 
 **Phasing**
 1. **QA:** Starter web service plus the $6 database, when the first `/qa` is due. Until then, `/qa` uses the local fallback and must say it is not environment QA.
-2. **Staging:** created at the first `vX.Y.Z-rc.N` tag.
+2. **Staging:** created at the first `vX.Y.Z-rc.N` tag. That tag cannot be cut until AO-22 sets `hosting.deployScript`, because `deploy-staging` fails without it.
 3. **Production:** created at release.
 
 **Backups (§9):** Render PITR, plus a nightly `pg_dump` job that keeps 14 days on the disk. The same dump is the §3.9 handover procedure. The operating guide adds a step to copy a dump off-platform, because the disk and the database share a vendor.
 
 **EmailJS guardrails**
 - It is browser-first. Verify the server-side API from Node with the private key before relying on it.
-- Send one digest per recipient, not one email per job.
+- For the 08:00 reminder and the weekly report, send one digest per recipient, not one email per job. Event emails follow the §3.5 settings the Admin chooses.
 - Count requests and log failures. Over-quota requests are dropped silently.
 - Render the HTML in the app and pass it to one generic template, so templates stay in the repo.
 
@@ -65,7 +65,8 @@ Option A, with environments created only when their gate needs them. Billing is 
   - Render prices and the Pro workspace fee are unverified, and the Render pricing page carried no date.
   - Memory: the production build may not fit 512 MB (AO-23).
   - EmailJS server-side use and Notify.lk sender ID lead time are unproven (AO-24).
-  - Account ownership: I could not confirm that Render can transfer services between workspaces. The Company should own the workspace before QA is created.
+  - Disk limits: the disk cannot shrink, blocks zero-downtime deploys, and holds both attachments and 14 days of dumps. Size it from the §3.6 maximum and swap to R2 (Option B) if it runs short; the size and trigger are to be set in AO-22.
+  - Account ownership: not confirmed that Render can transfer services between workspaces. The Company should own the workspace before QA is created.
   - The §6.3 and §9 figures come from the v1.3 PDF while CLAUDE.md says v1.4.
 - **Harness updates:**
   - AO-22: the Dockerfile, `scripts/deploy/render.sh <env> <ref>`, `hosting.deployScript`, the QA URL in `harness.config.json`, and the GitHub environments through `node scripts/harness/github-bootstrap.mjs`.
