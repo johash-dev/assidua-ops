@@ -1,0 +1,26 @@
+# Local development stack: PostgreSQL 18 and Mailpit (fake SMTP inbox). No accounts or secrets.
+# Start: docker compose up -d   ·   Stop: docker compose down
+# Override host ports when 5432/1025/8025 are taken: AO_PG_PORT=5433 docker compose up -d
+services:
+  postgres:
+    image: postgres:18.3
+    environment:
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - '127.0.0.1:${AO_PG_PORT:-5432}:5432'
+    volumes:
+      - pgdata:/var/lib/postgresql
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres -h 127.0.0.1']
+      interval: 2s
+      timeout: 3s
+      retries: 30
+
+  mailpit:
+    image: axllent/mailpit:v1.29.1
+    ports:
+      - '127.0.0.1:${AO_MAIL_SMTP_PORT:-1025}:1025'
+      - '127.0.0.1:${AO_MAIL_UI_PORT:-8025}:8025'
+
+volumes:
+  pgdata:

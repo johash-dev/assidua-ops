@@ -29,7 +29,8 @@ step "unit tests";    npm run --silent test:unit
 
 step "integration tests (PostgreSQL 18)"
 if [[ -z "${DATABASE_URL:-}" ]]; then
-  command -v docker >/dev/null || fail "DATABASE_URL is not set and docker is not available"
+  # shellcheck source=lib/require-docker.sh
+  source scripts/lib/require-docker.sh || fail "DATABASE_URL is not set and Docker is not usable"
   cid=$(docker run -d --rm -e POSTGRES_PASSWORD=verify -p 127.0.0.1::5432 postgres:18.3)
   trap 'docker stop "$cid" >/dev/null 2>&1 || true' EXIT
   for _ in $(seq 1 60); do
