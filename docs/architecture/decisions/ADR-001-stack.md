@@ -36,15 +36,15 @@ Option A.
 | Runtime | Node.js 24 (Active LTS) | Node 26 becomes LTS on 2026-10-28. Adopt it in a dedicated story. |
 | Database | PostgreSQL 18 | Supported to 2030-11. |
 | ORM and migrations | Drizzle, SQL migrations in the repo | |
-| Auth | Better Auth, username and password sessions | Auth.js is now maintained by the Better Auth team. Verify the password setup in the AO-4 spike. |
-| Scheduler | pg-boss cron with `tz: 'Asia/Colombo'` | Verify the version and timezone behaviour in the AO-4 spike. |
+| Auth | Better Auth, username and password sessions | Auth.js is now maintained by the Better Auth team. Password setup verified in the AO-6 spike (see Spike findings). |
+| Scheduler | pg-boss cron with `tz: 'Asia/Colombo'` | Version and timezone behaviour verified in the AO-6 spike (see Spike findings). |
 | Validation | Zod | |
 | Tests | Vitest (unit, and integration against real PostgreSQL), Playwright with axe-core (e2e) | |
 | Format and lint | Prettier, ESLint | |
 | UI | Tailwind with shadcn/ui | |
 
 **Zero-cost development rule**
-- Every chosen component is open source. Confirm each licence in the AO-4 spike.
+- Every chosen component is open source. Licences confirmed in the AO-6 spike: [dependency-licences.md](../dependency-licences.md).
 - Local and CI database: PostgreSQL 18 in Docker locally, and a Postgres service container in CI.
 - Email: Mailpit catches mail locally.
 - SMS: sits behind an adapter with a fake implementation in dev and test.
@@ -77,3 +77,36 @@ Option A.
 - Drizzle and Prisma comparison: https://www.bytebase.com/blog/drizzle-vs-prisma.md
 - Auth libraries: https://blog.logrocket.com/best-auth-library-nextjs-2026/
 - pg-boss scheduling: https://deepwiki.com/timgit/pg-boss/10-scheduling
+
+## Spike findings (AO-6, 2026-10-24)
+Run against `postgres:18.3` in Docker, with better-auth 1.7.12, pg-boss 12.38.0, pg 8.23.1 on Node v24.12.0. Scripts were throwaway and are not committed.
+
+**Better Auth (AC1): passes.** Username plugin with `emailAndPassword: { minPasswordLength: 8 }`, using a `pg` Pool as the database and `getMigrations` to create the tables.
+```
+NEG 7-char password rejected
+NEG wrong password rejected
+NEG unknown username rejected
+STORED 782586646ccd28bc5486… length 161 format salt:hash = true
+POS login succeeded (case-insensitive username)
+```
+- The stored value is a salted one-way hash, not plaintext (§3.2).
+- Better Auth needs an email column. Staff have usernames only, so AO-4 must generate a placeholder email (for example `<username>@staff.invalid`) and hide it in the UI.
+- **No self-service reset (§3.2):** the reset endpoints (`requestPasswordReset`, `resetPassword`) exist on the API object, but without `sendResetPassword` configured the call fails: `BAD_REQUEST Reset password isn't enabled`. Keep it unconfigured and add a test that asserts it.
+- **Scope note:** §3.2 does not mention usernames, but the story AC does. Confirm with Johash that username login is intended.
+
+**pg-boss cron (AC2): passes.** `previewSchedule('0 8 * * *', { tz: 'Asia/Colombo' })` from 2026-10-24T03:00Z:
+```
+next runs UTC: 2026-10-25T02:30:00.000Z, 2026-10-26T02:30:00.000Z, 2026-10-27T02:30:00.000Z
+NEG default UTC would fire at 2026-10-24T08:00:00.000Z
+Colombo local: 2026-10-25, 08:00:00 IST   (offset asserted GMT+05:30)
+boundaries OK: 18:29:59Z -> 2026-10-24, 18:30:00Z -> 2026-10-25
+stored schedule: { name: 'reminder-spike', cron: '0 8 * * *', timezone: 'Asia/Colombo' }
+```
+- Without `tz`, pg-boss evaluates in UTC and fires at the wrong hour. Always pass `tz`.
+- Colombo has no DST, so the offset is a constant +05:30. The date rolls over at 18:30 UTC.
+- Not tested: a live firing at 08:00 (would need to wait or fake the clock). Offset and next-run maths are verified, and the schedule row persists with the timezone.
+- pg-boss 12 `schedule()` has a `missed` option (`skip` by default). Decide at scaffold whether a missed 08:00 reminder after downtime should be sent (`once`).
+
+**Licences (AC3, AC4):** see [dependency-licences.md](../dependency-licences.md). No paid or incompatible licence, so no decision is raised. MPL-2.0 on a dev-only dependency is noted.
+
+**Flagged, out of scope:** CI uses Node 22 while this ADR says Node 24. AO-4 should align them.
