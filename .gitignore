@@ -10,3 +10,8 @@ coverage/
 dist/
 next-env.d.ts
 *.tsbuildinfo
+
+# Local run output
+test-results/
+playwright-report/
+.data/
