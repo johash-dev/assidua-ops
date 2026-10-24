@@ -1,55 +1,32 @@
 import { readFileSync } from 'node:fs';
-import { randomBytes } from 'node:crypto';
 import { drizzle } from 'drizzle-orm/node-postgres';
 import { migrate } from 'drizzle-orm/node-postgres/migrator';
 import pg from 'pg';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
+import { createScratchDb } from '../test/scratch-db';
 
-const adminUrl = process.env.DATABASE_URL;
-if (!adminUrl) {
-  throw new Error(
-    'DATABASE_URL is required for integration tests (run via scripts/verify.sh)',
-  );
-}
-
-const scratchName = `ao_test_${randomBytes(6).toString('hex')}`;
-const scratchUrl = new URL(adminUrl);
-scratchUrl.pathname = `/${scratchName}`;
-
-const admin = new pg.Client({ connectionString: adminUrl });
-const scratch = new pg.Client({ connectionString: scratchUrl.toString() });
+const scratchDb = createScratchDb();
+const scratch = scratchDb.client;
 const db = () => drizzle(scratch);
-
-async function tableExists(name: string): Promise<boolean> {
-  const { rows } = await scratch.query(
-    'select to_regclass($1) is not null as present',
-    [`public.${name}`],
-  );
-  return rows[0].present;
-}
+const tableExists = scratchDb.tableExists;
 
 // drizzle-kit has no down migrations: run the paired SQL, then forget the
 // latest applied migration so it can be applied again.
-async function rollbackBaseline() {
-  await scratch.query(
-    readFileSync('drizzle/down/0000_baseline.down.sql', 'utf8'),
-  );
+async function rollbackLatest(downFile: string) {
+  await scratch.query(readFileSync(`drizzle/down/${downFile}`, 'utf8'));
   await scratch.query(
     'delete from drizzle.__drizzle_migrations where id = (select max(id) from drizzle.__drizzle_migrations)',
   );
 }
 
-beforeAll(async () => {
-  await admin.connect();
-  await admin.query(`create database ${scratchName}`);
-  await scratch.connect();
-});
+// Newest first: later migrations may depend on the baseline.
+async function rollbackAll() {
+  await rollbackLatest('0001_audit_log.down.sql');
+  await rollbackLatest('0000_baseline.down.sql');
+}
 
-afterAll(async () => {
-  await scratch.end();
-  await admin.query(`drop database if exists ${scratchName}`);
-  await admin.end();
-});
+beforeAll(scratchDb.setup);
+afterAll(scratchDb.teardown);
 
 describe('database', () => {
   it('connects to PostgreSQL 18', async () => {
@@ -69,7 +46,7 @@ describe('database', () => {
     await migrate(db(), { migrationsFolder: 'drizzle' });
     expect(await tableExists('app_meta')).toBe(true);
 
-    await rollbackBaseline();
+    await rollbackAll();
     expect(await tableExists('app_meta')).toBe(false);
 
     await migrate(db(), { migrationsFolder: 'drizzle' });
